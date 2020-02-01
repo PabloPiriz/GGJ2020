@@ -10,8 +10,8 @@ public class CTransitionManager : MonoBehaviour
         {
             if (_inst == null)
             {
-                return  Instantiate<GameObject>(
-                        Resources.Load <GameObject>("Transitions/TransitionManager"))
+                return Instantiate<GameObject>(
+                        Resources.Load<GameObject>("Transitions/TransitionManager"))
                         .GetComponent<CTransitionManager>();
             }
             else
@@ -28,7 +28,7 @@ public class CTransitionManager : MonoBehaviour
 
     void Awake()
     {
-        if(_inst != null && _inst != this)
+        if (_inst != null && _inst != this)
         {
             Destroy(this.gameObject);
             return;
@@ -41,7 +41,7 @@ public class CTransitionManager : MonoBehaviour
         _transitionAssets = new Dictionary<string, GameObject>();
         CTransition[] transitionObjects = Resources.LoadAll<CTransition>("Transitions/");
 
-        for(int i = 0; i < transitionObjects.Length;i++)
+        for (int i = 0; i < transitionObjects.Length; i++)
         {
             CTransition tr = transitionObjects[i];
             if (_transitionAssets.ContainsKey(tr.name))
@@ -60,7 +60,7 @@ public class CTransitionManager : MonoBehaviour
             return;
 
         GameObject transitionObj = _defaultTransition;
-        if(_transitionAssets.ContainsKey(name))
+        if (_transitionAssets.ContainsKey(name))
         {
             transitionObj = _transitionAssets[name];
         }
@@ -69,7 +69,7 @@ public class CTransitionManager : MonoBehaviour
         newObj.transform.SetParent(_canvas.transform);
         newObj.transform.localPosition = Vector3.zero;
         newObj.transform.localRotation = Quaternion.identity;
-        newObj.transform.localScale = Vector3.one;
+        //newObj.transform.localScale = Vector3.one;
 
         _activeTransition = newObj.GetComponent<CTransition>();
     }

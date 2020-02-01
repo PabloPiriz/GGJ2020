@@ -2,6 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
+    <CscToolPath>C:\UnityEditors\2019.2.17f1\Editor\Data\Tools\RoslynScripts</CscToolPath>
+    <CscToolExe>unity_csc.bat</CscToolExe>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -45,6 +47,14 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>C:\UnityEditors\2019.2.17f1\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>C:\UnityEditors\2019.2.17f1\Editor\Data\Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
      <Compile Include="Assets\Script\api\Mathfx.cs" />
      <Compile Include="Assets\Script\api\menu\CMenu.cs" />
      <Compile Include="Assets\Script\api\menu\CMenuButton.cs" />
@@ -53,44 +63,42 @@
      <Compile Include="Assets\Script\api\Transitions\CFadeTransition.cs" />
      <Compile Include="Assets\Script\api\Transitions\CTransition.cs" />
      <Compile Include="Assets\Script\api\Transitions\CTransitionManager.cs" />
+     <Compile Include="Assets\Script\game\CGame.cs" />
      <Compile Include="Assets\Script\game\CGyroscopeTesting.cs" />
      <Compile Include="Assets\Script\game\CMainMenu.cs" />
      <Compile Include="Assets\Script\game\CSceneManager.cs" />
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>C:/Users/Usuario/Desktop/GGJ2020/GGJ2020/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine">
- <HintPath>C:/UnityEditors/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+ <HintPath>C:/Users/Usuario/Desktop/GGJ2020Repo/GGJ2020/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/UnityEditors/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -262,9 +270,6 @@
  </Reference>
  <Reference Include="UnityEngine.XRModule">
  <HintPath>C:/UnityEditors/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor">
- <HintPath>C:/UnityEditors/2019.2.17f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/UnityEditors/2019.2.17f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -619,7 +624,7 @@
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

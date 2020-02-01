@@ -5,75 +5,124 @@ using UnityEngine;
 public class CGyroscopeTesting : MonoBehaviour
 {
     // Faces for 6 sides of the cube
-    private GameObject[] quads = new GameObject[6];
+    private GameObject[] quads;
 
-    // Textures for each quad, should be +X, +Y etc
-    // with appropriate colors, red, green, blue, etc
-    public Texture[] labels;
+    public Camera _camera;
+
+    public float _speedX;
+    public float _speedY;
+    private float yaw = 0;
+    private float pitch = 0;
+    private Vector3 mCurrentFacing = new Vector3();
+
 
     void Start()
     {
         // make camera solid colour and based at the origin
-        GetComponent<Camera>().backgroundColor = new Color(49.0f / 255.0f, 77.0f / 255.0f, 121.0f / 255.0f);
-        GetComponent<Camera>().transform.position = new Vector3(0, 0, 0);
-        GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
+        _camera.backgroundColor = new Color(49.0f / 255.0f, 77.0f / 255.0f, 121.0f / 255.0f);
+        _camera.transform.position = new Vector3(0, 0, 0);
+        _camera.clearFlags = CameraClearFlags.SolidColor;
+
+        mCurrentFacing = _camera.transform.forward;
+
+        quads = new GameObject[6];
 
         // create the six quads forming the sides of a cube
         GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
 
         quads[0] = createQuad(quad, new Vector3(1, 0, 0), new Vector3(0, 90, 0), "plus x",
-            new Color(0.90f, 0.10f, 0.10f, 1), labels[0]);
+            Color.blue);
         quads[1] = createQuad(quad, new Vector3(0, 1, 0), new Vector3(-90, 0, 0), "plus y",
-            new Color(0.10f, 0.90f, 0.10f, 1), labels[1]);
+            Color.red);
         quads[2] = createQuad(quad, new Vector3(0, 0, 1), new Vector3(0, 0, 0), "plus z",
-            new Color(0.10f, 0.10f, 0.90f, 1), labels[2]);
+            Color.white);
         quads[3] = createQuad(quad, new Vector3(-1, 0, 0), new Vector3(0, -90, 0), "neg x",
-            new Color(0.90f, 0.50f, 0.50f, 1), labels[3]);
+            Color.cyan);
         quads[4] = createQuad(quad, new Vector3(0, -1, 0), new Vector3(90, 0, 0), "neg y",
-            new Color(0.50f, 0.90f, 0.50f, 1), labels[4]);
+            Color.green);
         quads[5] = createQuad(quad, new Vector3(0, 0, -1), new Vector3(0, 180, 0), "neg z",
-            new Color(0.50f, 0.50f, 0.90f, 1), labels[5]);
+            Color.yellow);
 
         GameObject.Destroy(quad);
     }
 
     // make a quad for one side of the cube
-    GameObject createQuad(GameObject quad, Vector3 pos, Vector3 rot, string name, Color col, Texture t)
+    GameObject createQuad(GameObject quad, Vector3 pos, Vector3 rot, string name, Color col)
     {
         Quaternion quat = Quaternion.Euler(rot);
         GameObject GO = Instantiate(quad, pos, quat);
         GO.name = name;
         GO.GetComponent<Renderer>().material.color = col;
-        GO.GetComponent<Renderer>().material.mainTexture = t;
+        //GO.GetComponent<Renderer>().material.mainTexture = t;
         GO.transform.localScale += new Vector3(0.25f, 0.25f, 0.25f);
         return GO;
     }
 
-    protected void Update()
+    protected void FixedUpdate()
     {
-        GyroModifyCamera();
+#if UNITY_EDITOR
+        mouseRotateCamera();
+#elif UNITY_IOS
+        gyroModifyCamera();
+#endif
+        mCurrentFacing = _camera.transform.forward;
     }
 
     protected void OnGUI()
     {
-        GUI.skin.label.fontSize = Screen.width / 40;
-
-        GUILayout.Label("Orientation: " + Screen.orientation);
-        GUILayout.Label("input.gyro.attitude: " + Input.gyro.attitude);
-        GUILayout.Label("iphone width/font: " + Screen.width + " : " + GUI.skin.label.fontSize);
+        GUI.skin.label.fontSize = Screen.width / 15;
+        if (!CTransitionManager.Inst.IsScreenCovered())
+        {
+#if UNITY_IOS
+            GUILayout.Label("Orientation: " + Screen.orientation);
+            GUILayout.Label("input.gyro.attitude: " + Input.gyro.attitude);
+            GUILayout.Label("iphone width/font: " + Screen.width + " : " + GUI.skin.label.fontSize);
+#endif
+            GUILayout.Label("CameraQuaternion: " + _camera.transform.rotation);
+        }
     }
 
     /********************************************/
 
     // The Gyroscope is right-handed.  Unity is left handed.
     // Make the necessary change to the camera.
-    void GyroModifyCamera()
+    private void gyroModifyCamera()
     {
-        transform.rotation = GyroToUnity(Input.gyro.attitude);
+        transform.rotation = gyroToUnity(Input.gyro.attitude);
+
+
     }
 
-    private static Quaternion GyroToUnity(Quaternion q)
+    private static Quaternion gyroToUnity(Quaternion q)
     {
         return new Quaternion(q.x, q.y, -q.z, -q.w);
+    }
+
+    private void mouseRotateCamera()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            //Debug.Log("button down!");
+            yaw += _speedX * Input.GetAxis("Mouse X");
+            pitch -= _speedY * Input.GetAxis("Mouse Y");
+
+            _camera.transform.eulerAngles = new Vector3(pitch, yaw, 0);
+        }
+        /*
+        var c = _camera.transform;
+        c.Rotate(0, Input.GetAxis("Mouse X") * _sensitivity, 0);
+        c.Rotate(-Input.GetAxis("Mouse Y") * _sensitivity, 0, 0);
+        c.Rotate(0, 0, -Input.GetAxis("QandE") * 90 * Time.deltaTime);*/
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(_camera.transform.position, _camera.transform.forward);
+    }
+
+    public Vector3 getCurrentFacing()
+    {
+        return mCurrentFacing;
     }
 }

@@ -9,14 +9,21 @@ public class CSceneManager : MonoBehaviour
     {
         get
         {
-            return _inst;
+            if (_inst == null)
+            {
+                return Instantiate<GameObject>(
+                        Resources.Load<GameObject>("SceneManager"))
+                        .GetComponent<CSceneManager>();
+            }
+            else
+                return _inst;
         }
     }
     private static CSceneManager _inst;
 
     void Awake()
     {
-        if(_inst != null && _inst != this)
+        if (_inst != null && _inst != this)
         {
             Destroy(this.gameObject);
             return;
