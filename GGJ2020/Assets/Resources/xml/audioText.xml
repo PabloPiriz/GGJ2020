@@ -1,0 +1,4 @@
+<audioText>
+    <audio id="interferencia1" path="Audio/Interferencia1" text="aText" isNoise="True" isMain="False"/>
+    <audio id="interferencia2" path="Audio/Interferencia2" text="aText" isNoise="True" isMain="False"/>
+</audioText>

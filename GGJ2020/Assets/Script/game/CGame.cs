@@ -220,14 +220,15 @@ public class CGame : MonoBehaviour
                     //but we are no longer within its range
                     if (aDistance > mAudioRadius)
                     {
+                        //set mCurrentAudio volume to 0 at AudioManager
+
                         //we reset mCurrentAudio to -1
                         setCurrentAudio(-1);
-                        //set audio volume to 0 at AudioManager
                     }
                     else
                     {
-                        float aVolume = 1 - (aDistance / mAudioRadius);
-                        //set audio volume to aVolume at AudioManager
+                        setAudioVolume(aDistance);
+
                     }
                 }
             }
@@ -243,6 +244,7 @@ public class CGame : MonoBehaviour
                     if (aDistance < mAudioRadius)
                     {
                         setCurrentAudio(i);
+                        setAudioVolume(aDistance);
                     }
                 }
             }
@@ -255,6 +257,13 @@ public class CGame : MonoBehaviour
     {
         mCurrentAudio = aAudioIndex;
 
-        // set all other user audios to 0, just in case
+        // set 
+    }
+
+    public void setAudioVolume(float aDistance)
+    {
+        float aVolume = 1 - (aDistance / mAudioRadius);
+
+        //set audio volume to aVolume at AudioManage
     }
 }
