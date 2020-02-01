@@ -44,6 +44,11 @@ public class CGyroscopeTesting : MonoBehaviour
             Color.yellow);
 
         GameObject.Destroy(quad);
+
+        foreach (var item in quads)
+        {
+            item.SetActive(false);
+        }
     }
 
     // make a quad for one side of the cube

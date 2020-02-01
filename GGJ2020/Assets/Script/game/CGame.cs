@@ -5,21 +5,26 @@ using UnityEngine;
 public class CGame : MonoBehaviour
 {
     private List<Vector3> mAudioSources;
-    private Dictionary<Vector3, float> mAudioVolume;
     private List<Vector3> mNoiseSources;
     private Dictionary<Vector3, float> mNoiseVolume;
     private float mAudioRadius = 15;
     private float mNoiseRadius = 45;
+    private int mCurrentAudio;
 
     public CGyroscopeTesting _gyroscope;
 
     private int mAmountOfAudios = 5;
     private int mAmountOfNoises = 4;
+
+    private int mState;
+
+    private const int STATE_PLAYING = 0;
+    private const int STATE_SELECTING = 1;
+    private const int STATE_ENDING = 2;
     // Start is called before the first frame update
     void Start()
     {
         mAudioSources = new List<Vector3>();
-        mAudioVolume = new Dictionary<Vector3, float>();
         mNoiseSources = new List<Vector3>();
         mNoiseVolume = new Dictionary<Vector3, float>();
 
@@ -28,12 +33,46 @@ public class CGame : MonoBehaviour
         generateNoiseSources();
 
         CTransitionManager.Inst.SetFadeOutFlag();
+
+        setState(STATE_PLAYING);
+    }
+
+    public void setState(int aState)
+    {
+        mState = aState;
+
+        if (mState == STATE_PLAYING)
+        {
+
+        }
+        else if (mState == STATE_SELECTING)
+        {
+
+        }
+        else if (mState == STATE_ENDING)
+        {
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        updateNoiseFading();
+        if (mState == STATE_PLAYING)
+        {
+            updateNoiseFading();
+            updateAudioFading();
+
+
+        }
+        else if (mState == STATE_SELECTING)
+        {
+
+        }
+        else if (mState == STATE_ENDING)
+        {
+
+        }
     }
 
     void OnDrawGizmos()
@@ -86,7 +125,6 @@ public class CGame : MonoBehaviour
             if (!tooClose)
             {
                 mAudioSources.Add(aVector);
-                mAudioVolume.Add(aVector, 1 / mAmountOfAudios);
                 attempts = 0;
             }
 
@@ -165,5 +203,58 @@ public class CGame : MonoBehaviour
                 //Debug.Log("noise#" + (i + 1) + " has " + mNoiseVolume[mNoiseSources[i]] + " volume");
             }
         }
+    }
+
+    public void updateAudioFading()
+    {
+        if (_gyroscope != null)
+        {
+            Vector3 aCurrentDir = _gyroscope.getCurrentFacing();
+
+            //if we currently have an audio playing
+            if (mCurrentAudio != -1)
+            {
+                if (mCurrentAudio > 0 && mCurrentAudio < mAudioSources.Count)
+                {
+                    float aDistance = Mathf.Abs(Vector3.Angle(mAudioSources[mCurrentAudio], aCurrentDir));
+                    //but we are no longer within its range
+                    if (aDistance > mAudioRadius)
+                    {
+                        //we reset mCurrentAudio to -1
+                        setCurrentAudio(-1);
+                        //set audio volume to 0 at AudioManager
+                    }
+                    else
+                    {
+                        float aVolume = 1 - (aDistance / mAudioRadius);
+                        //set audio volume to aVolume at AudioManager
+                    }
+                }
+            }
+
+            if (mCurrentAudio == -1)
+            {
+
+
+                for (int i = 0; i < mAudioSources.Count; i++)
+                {
+                    float aDistance = Mathf.Abs(Vector3.Angle(mAudioSources[i], aCurrentDir));
+
+                    if (aDistance < mAudioRadius)
+                    {
+                        setCurrentAudio(i);
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    public void setCurrentAudio(int aAudioIndex)
+    {
+        mCurrentAudio = aAudioIndex;
+
+        // set all other user audios to 0, just in case
     }
 }
