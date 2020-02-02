@@ -1,8 +1,8 @@
 <audioText>
-    <audio id="interferencia1" path="Audio/Noises/Interferencia1" text="aText" isNoise="True" puntaje=""/>
-    <audio id="interferencia2" path="Audio/Noises/Interferencia2" text="aText" isNoise="True" puntaje=""/>
-    <audio id="interferencia3" path="Audio/Noises/Interferencia3" text="aText" isNoise="True" puntaje=""/>
-    <audio id="interferencia4" path="Audio/Noises/Interferencia4" text="aText" isNoise="True" puntaje=""/>
+    <audio id="interferencia1" path="Audio/Noises/Interferencia1" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="interferencia2" path="Audio/Noises/Interferencia2" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="interferencia3" path="Audio/Noises/Interferencia3" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="interferencia4" path="Audio/Noises/Interferencia4" text="aText" isNoise="True" puntaje="0"/>
     <audio id="base1" path="Audio/Voices/Base/Base1" text="aText" isNoise="False" puntaje="15"/>
     <audio id="base2" path="Audio/Voices/Base/Base2" text="aText" isNoise="False" puntaje="5"/>
     <audio id="base3" path="Audio/Voices/Base/Base3" text="aText" isNoise="False" puntaje="3"/>

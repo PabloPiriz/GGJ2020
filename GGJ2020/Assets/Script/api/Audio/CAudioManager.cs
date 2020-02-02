@@ -27,11 +27,11 @@ public class CAudioManager : MonoBehaviour
     public AudioMixer Mixer;
     public AudioMixerGroup NoiseMixerGroup;
     public AudioMixerGroup VoiceMixerGroup;
-    public List <AudioSource> NoiseComponents;
-    public List <AudioSource> VoiceComponents;
+    public List<AudioSource> NoiseComponents;
+    public List<AudioSource> VoiceComponents;
     public List<CAudio> NoiseResources;
     public List<CAudio> VoiceResources;
-    
+
     void Awake()
     {
         if (_inst != null && _inst != this)
@@ -90,7 +90,7 @@ public class CAudioManager : MonoBehaviour
         VoiceResources = new List<CAudio>(count);
         var mainAudios = CAudioLoader.Inst.getMainAudios();
         Debug.Assert(0 < mainAudios.Count);
-        Debug.Assert(mainAudios.TrueForAll(n => n.mClip != null && !n.mNoise && n.mMain));
+        Debug.Assert(mainAudios.TrueForAll(n => n.mClip != null && !n.mNoise));// && n.mMain));
         mainAudios.Shuffle();
         VoiceResources.Add(mainAudios[0]);
 
@@ -98,7 +98,7 @@ public class CAudioManager : MonoBehaviour
         {
             var baseAudios = CAudioLoader.Inst.getBaseAudios();
             Debug.Assert(count - 1 <= baseAudios.Count);
-            Debug.Assert(baseAudios.TrueForAll(n => n.mClip != null && !n.mNoise && !n.mMain));
+            Debug.Assert(baseAudios.TrueForAll(n => n.mClip != null && !n.mNoise));// && !n.mMain));
             baseAudios.Shuffle();
             VoiceResources.AddRange(baseAudios.GetRange(0, count - 1));
         }
@@ -122,7 +122,7 @@ public class CAudioManager : MonoBehaviour
         Debug.Assert(0 <= volume && volume <= 1);
         NoiseComponents[noise].volume = volume;
     }
-    
+
     private int currentVoice = -1;
     public void SetVoice(int voice)
     {

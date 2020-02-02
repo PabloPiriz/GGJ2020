@@ -134,7 +134,7 @@ public class CAudioLoader : MonoBehaviour
 
         for (int i = 0; i < mAudios.Count; i++)
         {
-            if (!mAudios[i].mNoise && !mAudios[i].mMain)
+            if (!mAudios[i].mNoise)
             {
                 aAudios.Add(mAudios[i]);
             }
@@ -142,13 +142,14 @@ public class CAudioLoader : MonoBehaviour
         return aAudios;
     }
 
+    //no longer required !! only use getBaseAudios
     public List<CAudio> getMainAudios()
     {
         List<CAudio> aAudios = new List<CAudio>();
 
         for (int i = 0; i < mAudios.Count; i++)
         {
-            if (!mAudios[i].mNoise && mAudios[i].mMain)
+            if (!mAudios[i].mNoise)
             {
                 aAudios.Add(mAudios[i]);
             }
