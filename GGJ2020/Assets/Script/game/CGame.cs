@@ -12,6 +12,7 @@ public class CGame : MonoBehaviour
     private int mCurrentAudio;
 
     public CGyroscopeTesting _gyroscope;
+    public Animator _background;
 
     private int mAmountOfAudios = 5;
     private int mAmountOfNoises = 4;
@@ -33,6 +34,8 @@ public class CGame : MonoBehaviour
         generateNoiseSources();
 
         CTransitionManager.Inst.SetFadeOutFlag();
+
+        _background.SetBool("isActive", false);
 
         setState(STATE_PLAYING);
     }
@@ -181,6 +184,8 @@ public class CGame : MonoBehaviour
         {
             Vector3 aCurrentDir = _gyroscope.getCurrentFacing();
 
+            float aMinDistance = 4000;
+
             List<float> aDistances = new List<float>();
 
             for (int i = 0; i < mNoiseSources.Count; i++)
@@ -188,7 +193,14 @@ public class CGame : MonoBehaviour
                 float aDistance = Mathf.Abs(Vector3.Angle(mNoiseSources[i], aCurrentDir));
 
                 aDistances.Add(aDistance);
+
+                if (aMinDistance > aDistance)
+                {
+                    aMinDistance = aDistance;
+                }
             }
+
+            Debug.Log("aMinDistance for noise: " + aMinDistance);
 
             float aTotal = 0;
 
@@ -224,6 +236,9 @@ public class CGame : MonoBehaviour
 
                         //we reset mCurrentAudio to -1
                         setCurrentAudio(-1);
+
+                        _background.SetBool("isActive", false);
+                        Debug.Log("+++ NOT ACTIVE!!");
                     }
                     else
                     {
@@ -236,17 +251,28 @@ public class CGame : MonoBehaviour
             if (mCurrentAudio == -1)
             {
 
-
+                float aMinDistance = 40000;
                 for (int i = 0; i < mAudioSources.Count; i++)
                 {
                     float aDistance = Mathf.Abs(Vector3.Angle(mAudioSources[i], aCurrentDir));
+
+                    if (aDistance < aMinDistance)
+                    {
+                        aMinDistance = aDistance;
+                    }
 
                     if (aDistance < mAudioRadius)
                     {
                         setCurrentAudio(i);
                         setAudioVolume(aDistance);
+
+                        Debug.Log("+++ ACTIVE!!");
+
+                        _background.SetBool("isActive", true);
                     }
                 }
+
+                Debug.Log("aMinDistance for noise: " + aMinDistance);
             }
 
 
