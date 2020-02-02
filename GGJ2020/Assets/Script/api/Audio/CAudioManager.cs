@@ -237,7 +237,7 @@ public class CAudioManager : MonoBehaviour
     {
         if (currentVoice != -1)
         {
-            var audioSource = VoiceComponents[currentVoice % VoiceResources.Count];
+            var audioSource = VoiceComponents[currentVoice % VoiceComponents.Count];
             if (currentVoiceTraceholdInPoint != -1)
             {
                 // In signal
@@ -280,7 +280,6 @@ public class CAudioManager : MonoBehaviour
         }
         SetMainNoiseVolume(1 - volume);
     }
-
     private void SetMainNoiseVolume(float volume)
     {
         Debug.Assert(0 <= volume && volume <= 1);
@@ -290,11 +289,13 @@ public class CAudioManager : MonoBehaviour
     public void stopAllFrequencies()
     {
         Debug.Log("stopAllFrequencies");
-        //UpdateVoiceVolume(0);
-        //SetMainNoiseVolume(0);
-
+        
         Mixer.SetFloat("OtherVol", float.MinValue);
-        //Mixer.SetFloat("MachineVol", float.MinValue);
+        if (currentVoice != -1)
+        {
+            VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, VoiceComponents[currentVoice % VoiceComponents.Count].time);
+            currentVoiceTraceholdInPoint = -1;
+        }
     }
 
     public void restartAllFrequencies()
@@ -302,6 +303,10 @@ public class CAudioManager : MonoBehaviour
         Debug.Log("restart them!!");
 
         Mixer.SetFloat("OtherVol", 0);
+        if (currentVoice != -1)
+        {
+            currentVoiceTraceholdInPoint = VoiceComponents[currentVoice % VoiceComponents.Count].time;
+        }
     }
 
     public List<CAudioStatistics> getAudiosListened()

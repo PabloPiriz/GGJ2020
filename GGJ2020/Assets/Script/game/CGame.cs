@@ -101,6 +101,7 @@ public class CGame : MonoBehaviour
             //_background.SetBool("isBroken", true);
             CAudioManager.Inst.UpdateVoiceVolume(0);
             CAudioManager.Inst.SetVoice(-1);
+            CAudioManager.Inst.stopAllFrequencies();
 
             List<CAudioStatistics> clipStatistics = CAudioManager.Inst.getAudiosListened();
             foreach (var sts in clipStatistics)
