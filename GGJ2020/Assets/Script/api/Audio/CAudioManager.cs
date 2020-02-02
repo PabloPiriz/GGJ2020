@@ -84,7 +84,7 @@ public class CAudioManager : MonoBehaviour
         Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
         Music.clip = aMusic;
         Music.outputAudioMixerGroup = MusicGroup;
-        Mixer.SetFloat("musicVol", -5);
+        Mixer.SetFloat("MusicVol", -5);
         Music.loop = true;
     }
 
@@ -289,7 +289,7 @@ public class CAudioManager : MonoBehaviour
     {
         Debug.Log("restart them!!");
 
-        Mixer.SetFloat("otherVol", 0);
+        Mixer.SetFloat("OtherVol", 0);
     }
 
     public List<CAudioStatistics> getAudiosListened()
