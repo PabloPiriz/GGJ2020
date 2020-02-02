@@ -14,7 +14,7 @@ public class CGame : MonoBehaviour
     public CGyroscopeTesting _gyroscope;
     public Animator _background;
 
-    private int mAmountOfAudios = 3;
+    private int mAmountOfAudios = 8;
     private int mAmountOfNoises = 4;
 
     private int mState;
