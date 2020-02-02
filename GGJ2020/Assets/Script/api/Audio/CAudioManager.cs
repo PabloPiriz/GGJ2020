@@ -25,6 +25,7 @@ public class CAudioManager : MonoBehaviour
     }
 
     public const float SignalTracehold = .3f;
+    public const float VoiceCompletedTracehold = .5f;
     public AudioMixer Mixer;
     public AudioMixerGroup NoiseMixerGroup;
     public AudioMixerGroup VoiceMixerGroup;
@@ -42,9 +43,6 @@ public class CAudioManager : MonoBehaviour
     public List<CAudio> NoiseResources;
     public List<CAudio> VoiceResources;
     public List<CAudioStatistics> VoiceStatistics;
-
-    public float mAudioPreviousPercentage = 0;
-
     public AudioSource Music;
 
 
@@ -64,6 +62,10 @@ public class CAudioManager : MonoBehaviour
     {
         GrannyResources = CAudioLoader.Inst.getGrannyAudios();
         GrannyResources.Shuffle();
+
+        grannySource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        grannySource.outputAudioMixerGroup = GrannyGroup;
+        grannySource.loop = false;
 
         // for (int i = 0; i < GrannyResources.Count; i++)
         // {
@@ -216,7 +218,6 @@ public class CAudioManager : MonoBehaviour
 
     public void UpdateVoiceVolume(float volume)
     {
-        mAudioPreviousPercentage = volume;
         if (currentVoice != -1)
         {
             var audioSource = VoiceComponents[currentVoice % VoiceResources.Count];
@@ -244,17 +245,17 @@ public class CAudioManager : MonoBehaviour
                 // Signal off
                 VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, audioSource.clip.length);
                 currentVoiceTraceholdInPoint = -1;
+                if (VoiceStatistics[currentVoice].GetPercentage() >= VoiceCompletedTracehold && 
+                    !VoiceStatistics[currentVoice].hasGrannyPlayed)
+                {
+                    VoiceStatistics[currentVoice].hasGrannyPlayed = true;
+                    playGranny();
+                }
                 Debug.Log("Lost signal");
             }
             audioSource.volume = volume;
 
             Debug.Log("*** current voice percentage: " + VoiceStatistics[currentVoice].GetPercentage());
-
-            if (VoiceStatistics[currentVoice].GetPercentage() >= 0.5f && !VoiceStatistics[currentVoice].mAudio.hasGrannyPlayed)
-            {
-                VoiceStatistics[currentVoice].mAudio.hasGrannyPlayed = true;
-                CAudioManager.Inst.playGranny();
-            }
         }
         SetMainNoiseVolume(1 - volume);
     }
@@ -278,7 +279,6 @@ public class CAudioManager : MonoBehaviour
     public void restartAllFrequencies()
     {
         Debug.Log("restart them!!");
-        //UpdateVoiceVolume(mAudioPreviousPercentage);
 
         Mixer.SetFloat("MachineVol", 0);
     }
@@ -329,17 +329,9 @@ public class CAudioManager : MonoBehaviour
     {
         Debug.Log("*** play GRANNY!");
 
-        grannyIndex += 1;
+        grannyIndex = (grannyIndex + 1) % GrannyResources.Count;
 
-        if (grannyIndex < 0 || grannyIndex >= GrannyResources.Count)
-        {
-            grannyIndex = 0;
-        }
-
-        grannySource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
-        grannySource.outputAudioMixerGroup = GrannyGroup;
         grannySource.clip = GrannyResources[grannyIndex].mClip;
-        grannySource.loop = false;
         grannySource.Play();
     }
 
@@ -347,8 +339,6 @@ public class CAudioManager : MonoBehaviour
     {
         CAudio cachivache = CAudioLoader.Inst.mCachivache;
 
-        grannySource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
-        grannySource.outputAudioMixerGroup = GrannyGroup;
         grannySource.clip = cachivache.mClip;
         grannySource.loop = false;
         grannySource.Play();

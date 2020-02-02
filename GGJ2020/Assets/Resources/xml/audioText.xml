@@ -38,6 +38,7 @@
     <audio id="audio33" path="Audio/Voices/audio33" text="ayuda desesperada" isNoise="False" puntaje="5" isGranny = "False"/>
     <audio id="audio34" path="Audio/Voices/audio34" text="coordenadas" isNoise="False" puntaje="4" isGranny = "False"/>
     <audio id="audio35" path="Audio/Voices/audio35" text="wilsooon" isNoise="False" puntaje="4" isGranny = "False"/>
+    <audio id="nierii" path="Audio/Voices/nierii" text="rover nierinieri" isNoise="False" puntaje="2" isGranny = "False"/>
     <audio id="granny0" path="Audio/cachivache" text="aText" isNoise="True" puntaje="0" isGranny = "True"/>
     <audio id="granny1" path="Audio/notepuedocreer1" text="aText" isNoise="False" puntaje="0" isGranny = "True"/>
     <audio id="granny2" path="Audio/notepuedocreer2" text="aText" isNoise="False" puntaje="0" isGranny = "True"/>
