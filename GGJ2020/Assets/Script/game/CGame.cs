@@ -13,8 +13,8 @@ public class CGame : MonoBehaviour
 
     public CGyroscopeTesting _gyroscope;
 
-    private int mAmountOfAudios = 5;
-    private int mAmountOfNoises = 4;
+    private int mAmountOfAudios = 3;
+    private int mAmountOfNoises = 2;
 
     private int mState;
 
@@ -134,6 +134,7 @@ public class CGame : MonoBehaviour
                 break;
             }
         }
+        CAudioManager.Inst.LoadVoices(mAmountOfAudios);
     }
 
     private void generateNoiseSources()
@@ -173,6 +174,7 @@ public class CGame : MonoBehaviour
                 break;
             }
         }
+        CAudioManager.Inst.LoadNoises(mAmountOfNoises);
     }
 
     private void updateNoiseFading()
@@ -199,7 +201,8 @@ public class CGame : MonoBehaviour
 
             for (int i = 0; i < mNoiseSources.Count; i++)
             {
-                mNoiseVolume[mNoiseSources[i]] = aDistances[i] / aTotal;
+                mNoiseVolume[mNoiseSources[i]] = 1 - (aDistances[i] / aTotal);
+                CAudioManager.Inst.UpdateNoiseVolume(i, mNoiseVolume[mNoiseSources[i]]);
                 //Debug.Log("noise#" + (i + 1) + " has " + mNoiseVolume[mNoiseSources[i]] + " volume");
             }
         }
@@ -214,13 +217,14 @@ public class CGame : MonoBehaviour
             //if we currently have an audio playing
             if (mCurrentAudio != -1)
             {
-                if (mCurrentAudio > 0 && mCurrentAudio < mAudioSources.Count)
+                if (mCurrentAudio >= 0 && mCurrentAudio < mAudioSources.Count)
                 {
                     float aDistance = Mathf.Abs(Vector3.Angle(mAudioSources[mCurrentAudio], aCurrentDir));
                     //but we are no longer within its range
                     if (aDistance > mAudioRadius)
                     {
                         //set mCurrentAudio volume to 0 at AudioManager
+                        CAudioManager.Inst.UpdateVoiceVolume(0);
 
                         //we reset mCurrentAudio to -1
                         setCurrentAudio(-1);
@@ -258,6 +262,7 @@ public class CGame : MonoBehaviour
         mCurrentAudio = aAudioIndex;
 
         // set 
+        CAudioManager.Inst.SetVoice(mCurrentAudio);
     }
 
     public void setAudioVolume(float aDistance)
@@ -265,5 +270,6 @@ public class CGame : MonoBehaviour
         float aVolume = 1 - (aDistance / mAudioRadius);
 
         //set audio volume to aVolume at AudioManage
+        CAudioManager.Inst.UpdateVoiceVolume(aVolume);
     }
 }
