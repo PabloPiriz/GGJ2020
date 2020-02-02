@@ -40,6 +40,7 @@ public class CAudioManager : MonoBehaviour
     public AudioSource grannySource;
     public List<CAudio> GrannyResources = new List<CAudio>();
     public int grannyIndex = 0;
+    public int MinimumScoreToTriggerGrannyVoice = 3;
     public List<CAudio> NoiseResources;
     public List<CAudio> VoiceResources;
     public List<CAudioStatistics> VoiceStatistics;
@@ -247,7 +248,8 @@ public class CAudioManager : MonoBehaviour
                 currentVoiceTraceholdInPoint = -1;
                 var percentage = VoiceStatistics[currentVoice].GetPercentage();
                 if (percentage >= VoiceCompletedTracehold && 
-                    !VoiceStatistics[currentVoice].hasGrannyPlayed)
+                    !VoiceStatistics[currentVoice].hasGrannyPlayed &&
+                    VoiceStatistics[currentVoice].mAudio.mPuntaje >= MinimumScoreToTriggerGrannyVoice)
                 {
                     VoiceStatistics[currentVoice].hasGrannyPlayed = true;
                     playGranny();
