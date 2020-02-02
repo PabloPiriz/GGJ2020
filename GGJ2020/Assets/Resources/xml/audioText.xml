@@ -38,4 +38,5 @@
     <audio id="audio33" path="Audio/Voices/audio33" text="ayuda desesperada" isNoise="False" puntaje="5"/>
     <audio id="audio34" path="Audio/Voices/audio34" text="coordenadas" isNoise="False" puntaje="4"/>
     <audio id="audio35" path="Audio/Voices/audio35" text="wilsooon" isNoise="False" puntaje="4"/>
+    <audio id="nierii" path="Audio/Voices/nierii" text="rover nierinieri" isNoise="False" puntaje="2"/>
 </audioText>
