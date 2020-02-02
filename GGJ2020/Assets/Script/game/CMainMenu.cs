@@ -52,7 +52,7 @@ public class CMainMenu : MonoBehaviour
         {
             yield return null;
         }
-        CAudioManager.Inst.stopMusic();
+
         CSceneManager.Inst.LoadScene("Game");
 
         yield return null;

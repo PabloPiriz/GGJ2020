@@ -93,6 +93,15 @@ public class CAudioManager : MonoBehaviour
         Music.Play();
     }
 
+    public void playVictorySound()
+    {
+        AudioClip aMusic = Resources.Load<AudioClip>("Audio/Win3");
+        Music.clip = aMusic;
+        Music.loop = false;
+
+        Music.Play();
+    }
+
     public void stopMusic()
     {
         Music.Stop();
@@ -245,7 +254,7 @@ public class CAudioManager : MonoBehaviour
                 // Signal off
                 VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, audioSource.clip.length);
                 currentVoiceTraceholdInPoint = -1;
-                if (VoiceStatistics[currentVoice].GetPercentage() >= VoiceCompletedTracehold && 
+                if (VoiceStatistics[currentVoice].GetPercentage() >= VoiceCompletedTracehold &&
                     !VoiceStatistics[currentVoice].hasGrannyPlayed)
                 {
                     VoiceStatistics[currentVoice].hasGrannyPlayed = true;
@@ -280,7 +289,7 @@ public class CAudioManager : MonoBehaviour
     {
         Debug.Log("restart them!!");
 
-        Mixer.SetFloat("MachineVol", 0);
+        Mixer.SetFloat("otherVol", 0);
     }
 
     public List<CAudioStatistics> getAudiosListened()

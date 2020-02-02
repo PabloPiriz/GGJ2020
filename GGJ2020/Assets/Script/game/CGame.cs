@@ -24,7 +24,7 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 5;
+    private const float MAX_TIME = 45;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
@@ -98,9 +98,9 @@ public class CGame : MonoBehaviour
             _background.SetBool("isActive", false);
             _background.SetBool("goToWpp", true);
             //_background.SetBool("isBroken", true);
-            CAudioManager.Inst.UpdateVoiceVolume(0);
+            //CAudioManager.Inst.UpdateVoiceVolume(0);
             CAudioManager.Inst.SetVoice(-1);
-            
+
             List<CAudioStatistics> clipStatistics = CAudioManager.Inst.getAudiosListened();
             foreach (var sts in clipStatistics)
             {
@@ -120,7 +120,8 @@ public class CGame : MonoBehaviour
         }
         else if (mState == STATE_ENDING)
         {
-
+            CAudioManager.Inst.playVictorySound();
+            CAudioManager.Inst.stopAllFrequencies();
         }
     }
 
@@ -131,6 +132,7 @@ public class CGame : MonoBehaviour
         {
             if (!CTransitionManager.Inst.IsScreenCovered())
             {
+                CAudioManager.Inst.stopMusic();
                 setState(STATE_PLAYING);
             }
         }
@@ -167,8 +169,11 @@ public class CGame : MonoBehaviour
         }
         else if (mState == STATE_ENDING)
         {
-            CAudioManager.Inst.stopAllFrequencies();
-            CSceneManager.Inst.LoadScene("Main Menu");
+            if (!CAudioManager.Inst.Music.isPlaying)
+            {
+                CSceneManager.Inst.LoadScene("Main Menu");
+            }
+
         }
     }
 
