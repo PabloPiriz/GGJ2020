@@ -15,7 +15,9 @@ public class CMainMenu : MonoBehaviour
     {
         CAudioLoader.Inst.hello();
 
-        setState(mState);
+        CAudioManager.Inst.LoadMusic();
+
+        setState(STATE_INTRO);
     }
 
     public void setState(int aState)
@@ -25,7 +27,7 @@ public class CMainMenu : MonoBehaviour
         Debug.Log("mState: " + mState);
         if (mState == STATE_INTRO)
         {
-
+            CAudioManager.Inst.playMusic();
         }
         else if (mState == STATE_MAIN_MENU)
         {
@@ -50,7 +52,7 @@ public class CMainMenu : MonoBehaviour
         {
             yield return null;
         }
-
+        CAudioManager.Inst.stopMusic();
         CSceneManager.Inst.LoadScene("Game");
 
         yield return null;

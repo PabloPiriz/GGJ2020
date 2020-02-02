@@ -22,6 +22,39 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-5078434966678024314
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 0700a3633f6055e40a4edf39e68216de
+  m_EffectName: Attenuation
+  m_MixLevel: 8c8ac253d169ca54d961c5e5fc906445
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-4054366908401220146
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Granny
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 6bb4512204d851d41ad2e76bfe2c3ba2
+  m_Children: []
+  m_Volume: b100bd48071ee4849ac41e8c02d7e439
+  m_Pitch: de52b32d50c977c418a808af2e962291
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -5078434966678024314}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-2974666935656270869
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -116,6 +149,7 @@ AudioMixerController:
     - d573541d43ac72340a800750af175229
     - ac13f57a9a8b0d048a2c5bcc6be5742e
     - 943339d839405754d9a502a80dad265b
+    - 6bb4512204d851d41ad2e76bfe2c3ba2
     name: Global
   - guids:
     - 9b6e81e497c3f9f4394f7b2e7240d0f2
@@ -143,6 +177,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -2974666935656270869}
   - {fileID: -8814518632551637428}
+  - {fileID: -4054366908401220146}
   m_Volume: 019272a85a4b6134cb93485ea248d460
   m_Pitch: 4f1bce415c178c74e84fc7ab56906397
   m_Send: 00000000000000000000000000000000
@@ -176,7 +211,8 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: fa2e63c973208f146a2975b98e7041a6
   m_FloatValues:
-    4dc8dba95e14bbe459549a2eac688a78: 0
+    77e7d6064bdf0f246b5dbdf59dfdb64e: -20.610773
+    4dc8dba95e14bbe459549a2eac688a78: -21.302507
   m_TransitionOverrides: {}
 --- !u!244 &297189216769874115
 AudioMixerEffectController:

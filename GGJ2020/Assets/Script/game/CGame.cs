@@ -49,6 +49,7 @@ public class CGame : MonoBehaviour
 
         CAudioManager.Inst.LoadGranny();
 
+
         CAudioManager.Inst.loadTurnOnGroup();
 
         CTransitionManager.Inst.SetFadeOutFlag();
@@ -89,6 +90,8 @@ public class CGame : MonoBehaviour
             _background.SetBool("isBroken", true);
 
             CAudioManager.Inst.stopAllFrequencies();
+
+            CAudioManager.Inst.turnOff();
         }
         else if (mState == STATE_EVALUATION)
         {
@@ -110,6 +113,8 @@ public class CGame : MonoBehaviour
             }
 
             CAudioManager.Inst.stopAllFrequencies();
+
+            CAudioManager.Inst.turnOff();
         }
         else if (mState == STATE_ENDING)
         {
@@ -155,7 +160,7 @@ public class CGame : MonoBehaviour
         }
         else if (mState == STATE_EVALUATION)
         {
-
+            setState(STATE_ENDING);
         }
         else if (mState == STATE_ENDING)
         {

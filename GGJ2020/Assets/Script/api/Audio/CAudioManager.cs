@@ -31,6 +31,7 @@ public class CAudioManager : MonoBehaviour
     public AudioMixerGroup MachineOverall;
     public AudioMixerGroup GrannyGroup;
     public AudioMixerGroup TurnOnGroup;
+    public AudioMixerGroup MusicGroup;
     public AudioSource TurnOn;
     public AudioSource TurnOff;
     public List<AudioSource> NoiseComponents;
@@ -43,6 +44,8 @@ public class CAudioManager : MonoBehaviour
     public List<CAudioStatistics> VoiceStatistics;
 
     public float mAudioPreviousPercentage = 0;
+
+    public AudioSource Music;
 
 
     void Awake()
@@ -71,6 +74,25 @@ public class CAudioManager : MonoBehaviour
         //     source.volume = 0;
         //     source.loop = true;
         // }
+    }
+
+    public void LoadMusic()
+    {
+        AudioClip aMusic = Resources.Load<AudioClip>("Audio/MainLoop");
+        Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        Music.clip = aMusic;
+        Music.outputAudioMixerGroup = MusicGroup;
+        Music.loop = true;
+    }
+
+    public void playMusic()
+    {
+        Music.Play();
+    }
+
+    public void stopMusic()
+    {
+        Music.Stop();
     }
 
     public void LoadNoises(int count)
@@ -248,7 +270,8 @@ public class CAudioManager : MonoBehaviour
         //UpdateVoiceVolume(0);
         //SetMainNoiseVolume(0);
 
-        Mixer.SetFloat("MachineVol", float.MinValue);
+        Mixer.SetFloat("OtherVol", float.MinValue);
+        //Mixer.SetFloat("MachineVol", float.MinValue);
     }
 
     public void restartAllFrequencies()
