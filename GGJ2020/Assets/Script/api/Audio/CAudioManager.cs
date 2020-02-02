@@ -81,11 +81,27 @@ public class CAudioManager : MonoBehaviour
     public void LoadMusic()
     {
         AudioClip aMusic = Resources.Load<AudioClip>("Audio/MainLoop");
-        Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
-        Music.clip = aMusic;
-        Music.outputAudioMixerGroup = MusicGroup;
-        Mixer.SetFloat("musicVol", -5);
+        if (Music == null)
+        {
+            Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+            Music.outputAudioMixerGroup = MusicGroup;
+        }
         Music.loop = true;
+        Music.clip = aMusic;
+        Mixer.SetFloat("MusicVol", -5);
+    }
+
+    public void startWinMusic()
+    {
+        AudioClip aMusic = Resources.Load<AudioClip>("Audio/Win3");
+        if (Music == null)
+        {
+            Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+            Music.outputAudioMixerGroup = MusicGroup;
+        }
+        Music.loop = false;
+        Music.clip = aMusic;
+        Music.Play();
     }
 
     public void playMusic()
@@ -246,7 +262,7 @@ public class CAudioManager : MonoBehaviour
                 VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, audioSource.time);
                 currentVoiceTraceholdInPoint = -1;
                 var percentage = VoiceStatistics[currentVoice].GetPercentage();
-                if (percentage >= VoiceCompletedTracehold && 
+                if (percentage >= VoiceCompletedTracehold &&
                     !VoiceStatistics[currentVoice].hasGrannyPlayed)
                 {
                     VoiceStatistics[currentVoice].hasGrannyPlayed = true;
@@ -366,7 +382,7 @@ public class CAudioManager : MonoBehaviour
 
     public void turnOn()
     {
-        Mixer.SetFloat("turnOnVol", -10);
+        Mixer.SetFloat("TurnOnVol", -10);
         if (TurnOn != null)
         {
             TurnOn.Play();
@@ -377,11 +393,11 @@ public class CAudioManager : MonoBehaviour
     public void checkIfFinishedTurnOn()
     {
         float aFloat = 0;
-        if (Mixer.GetFloat("turnVol", out aFloat))
+        if (Mixer.GetFloat("TurnOnVol", out aFloat))
         {
             if (aFloat == -10)
             {
-                Mixer.SetFloat("turnOnVol", 0);
+                Mixer.SetFloat("TurnOnVol", 0);
             }
         }
     }

@@ -166,7 +166,7 @@ AudioMixerController:
   - guid: d7fe2264ecb051445bb66c3f1de823aa
     name: OtherVol
   - guid: 77e7d6064bdf0f246b5dbdf59dfdb64e
-    name: TurnOnVOl
+    name: TurnOnVol
   m_AudioMixerGroupViews:
   - guids:
     - 9b6e81e497c3f9f4394f7b2e7240d0f2

@@ -97,10 +97,11 @@ public class CGame : MonoBehaviour
         {
             _background.SetBool("isActive", false);
             _background.SetBool("goToWpp", true);
+            //_background.transform.rotation = Quaternion.EulerRotation(_background.transform.x, _background.transform.y, 0); // .z = 0;
             //_background.SetBool("isBroken", true);
             CAudioManager.Inst.UpdateVoiceVolume(0);
             CAudioManager.Inst.SetVoice(-1);
-            
+
             List<CAudioStatistics> clipStatistics = CAudioManager.Inst.getAudiosListened();
             foreach (var sts in clipStatistics)
             {
@@ -116,7 +117,9 @@ public class CGame : MonoBehaviour
 
             CAudioManager.Inst.stopAllFrequencies();
 
-            CAudioManager.Inst.turnOff();
+            CAudioManager.Inst.startWinMusic();
+
+            //CAudioManager.Inst.turnOff();
         }
         else if (mState == STATE_ENDING)
         {
@@ -131,6 +134,7 @@ public class CGame : MonoBehaviour
         {
             if (!CTransitionManager.Inst.IsScreenCovered())
             {
+                CAudioManager.Inst.stopMusic();
                 setState(STATE_PLAYING);
             }
         }
@@ -163,7 +167,13 @@ public class CGame : MonoBehaviour
         }
         else if (mState == STATE_EVALUATION)
         {
-            setState(STATE_ENDING);
+            if (_background.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && _background.GetCurrentAnimatorStateInfo(0).IsName("Wpp"))
+            {
+                if (!CAudioManager.Inst.Music.isPlaying)
+                {
+                    setState(STATE_ENDING);
+                }
+            }
         }
         else if (mState == STATE_ENDING)
         {
