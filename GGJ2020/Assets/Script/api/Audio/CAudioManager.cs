@@ -107,6 +107,21 @@ public class CAudioManager : MonoBehaviour
         Debug.Log("play win!!");
     }
 
+    public void startLoseMusic()
+    {
+        AudioClip aMusic = Resources.Load<AudioClip>("Audio/Lose");
+        if (Music == null)
+        {
+            Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+            Music.outputAudioMixerGroup = MusicGroup;
+        }
+        Music.loop = false;
+        Music.clip = aMusic;
+        Music.Play();
+
+        Debug.Log("play lose!!");
+    }
+
     public void playMusic()
     {
         if (Music != null)

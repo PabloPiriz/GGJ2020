@@ -7,7 +7,7 @@ public class CGame : MonoBehaviour
     private List<Vector3> mAudioSources;
     private List<Vector3> mNoiseSources;
     private Dictionary<Vector3, float> mNoiseVolume;
-    private float mAudioRadius = 50;
+    private float mAudioRadius = 30;
     private float mNoiseRadius = 45;
     private int mCurrentAudio;
 
@@ -17,7 +17,7 @@ public class CGame : MonoBehaviour
     public Animator _background;
     public Animator _doubleTap;
 
-    private int mAmountOfAudios = 12;
+    private int mAmountOfAudios = 10;
     private int mAmountOfNoises = 4;
 
     private int mState;
@@ -25,7 +25,7 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 5;
+    private const float MAX_TIME = 60;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
@@ -121,6 +121,7 @@ public class CGame : MonoBehaviour
             else
             {
                 _background.SetBool("hasWon", false);
+                CAudioManager.Inst.startLoseMusic();
             }
 
             //CAudioManager.Inst.turnOff();
