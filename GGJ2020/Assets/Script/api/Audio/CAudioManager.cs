@@ -84,21 +84,12 @@ public class CAudioManager : MonoBehaviour
         Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
         Music.clip = aMusic;
         Music.outputAudioMixerGroup = MusicGroup;
-        Mixer.SetFloat("MusicVol", -5);
+        Mixer.SetFloat("musicVol", -5);
         Music.loop = true;
     }
 
     public void playMusic()
     {
-        Music.Play();
-    }
-
-    public void playVictorySound()
-    {
-        AudioClip aMusic = Resources.Load<AudioClip>("Audio/Win3");
-        Music.clip = aMusic;
-        Music.loop = false;
-
         Music.Play();
     }
 
@@ -246,25 +237,28 @@ public class CAudioManager : MonoBehaviour
             {
                 // Signal on
                 currentVoiceTraceholdInPoint = audioSource.time;
-                Debug.Log("Signaled");
+                Debug.Log("++Signaled");
             }
             if (audioSource.volume > SignalTracehold &&
                 volume < SignalTracehold)
             {
                 // Signal off
-                VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, audioSource.clip.length);
+                VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, audioSource.time);
                 currentVoiceTraceholdInPoint = -1;
-                if (VoiceStatistics[currentVoice].GetPercentage() >= VoiceCompletedTracehold &&
+                var percentage = VoiceStatistics[currentVoice].GetPercentage();
+                if (percentage >= VoiceCompletedTracehold && 
                     !VoiceStatistics[currentVoice].hasGrannyPlayed)
                 {
                     VoiceStatistics[currentVoice].hasGrannyPlayed = true;
                     playGranny();
                 }
-                Debug.Log("Lost signal");
+                Debug.Log("++Lost signal percentage " + percentage + " segments " + VoiceStatistics[currentVoice].mPlayedSegments.Count);
+                foreach (var s in VoiceStatistics[currentVoice].mPlayedSegments)
+                {
+                    Debug.Log(string.Format("++segment min {0} max {1} total {2}", s.min, s.max, VoiceStatistics[currentVoice].mAudio.mClip.length));
+                }
             }
             audioSource.volume = volume;
-
-            Debug.Log("*** current voice percentage: " + VoiceStatistics[currentVoice].GetPercentage());
         }
         SetMainNoiseVolume(1 - volume);
     }
@@ -289,7 +283,7 @@ public class CAudioManager : MonoBehaviour
     {
         Debug.Log("restart them!!");
 
-        Mixer.SetFloat("OtherVol", 0);
+        Mixer.SetFloat("MachineVol", 0);
     }
 
     public List<CAudioStatistics> getAudiosListened()
