@@ -116,13 +116,6 @@ public class CAudioManager : MonoBehaviour
         }
     }
 
-    public void SetVoice(int voice)
-    {
-        Debug.Assert(-1 <= voice && voice < VoiceResources.Count);
-        Debug.Log(string.Format("Play clip {0}", voice == -1 ? "silence" : VoiceResources[voice % VoiceResources.Count].mId));
-        VoiceComponents.ForEach(c => c.volume = 0);
-    }
-
     public void UpdateNoiseVolume(int noise, float volume)
     {
         Debug.Assert(0 <= noise && noise < NoiseComponents.Count);
@@ -130,15 +123,27 @@ public class CAudioManager : MonoBehaviour
         NoiseComponents[noise].volume = volume;
     }
     
+    private int currentVoice = -1;
+    public void SetVoice(int voice)
+    {
+        Debug.Assert(-1 <= voice && voice < VoiceResources.Count);
+        Debug.Log(string.Format("Play clip {0}", voice == -1 ? "silence" : VoiceResources[voice % VoiceResources.Count].mId));
+        currentVoice = voice;
+        VoiceComponents.ForEach(c => c.volume = 0);
+    }
     public void UpdateVoiceVolume(float volume)
     {
         Debug.Log(string.Format("Update voice volume: {0}", volume));
-        SetVolume(VoiceMixerGroup, volume);
+        if (currentVoice != -1)
+        {
+            VoiceComponents[currentVoice % VoiceResources.Count].volume = volume;
+        }
+        SetMainNoiseVolume(1 - volume);
     }
 
-    private void SetVolume(AudioMixerGroup group, float volume)
+    private void SetMainNoiseVolume(float volume)
     {
         Debug.Assert(0 <= volume && volume <= 1);
-        group.audioMixer.SetFloat(string.Format("{0}Vol", group.name), volume);
+        Mixer.SetFloat(string.Format("NoiseVol", NoiseMixerGroup), Mathf.Log(volume) * 20);
     }
 }
