@@ -22,7 +22,7 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 60;
+    private const float MAX_TIME = 20;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
@@ -83,6 +83,13 @@ public class CGame : MonoBehaviour
         {
             _background.SetBool("isActive", false);
             _background.SetBool("isBroken", true);
+
+            List<CAudioStatistics> clipStatistics = CAudioManager.Inst.VoiceStatistics;
+            foreach (var sts in clipStatistics)
+            {
+                var percentage = sts.GetPercentage();
+                Debug.Log(string.Format("audioClip {0} percentage {1}", sts.mAudio.mId, percentage));
+            }
 
             CAudioManager.Inst.stopAllFrequencies();
         }
@@ -348,8 +355,6 @@ public class CGame : MonoBehaviour
     public void discountTimer()
     {
         mTimeRemaining -= Time.deltaTime;
-
-        Debug.Log("mTimeRemaining: " + mTimeRemaining);
 
         if (mTimeRemaining <= 0)
         {

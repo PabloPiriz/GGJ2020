@@ -24,6 +24,7 @@ public class CAudioManager : MonoBehaviour
         }
     }
 
+    public const float SignalTracehold = .3f;
     public AudioMixer Mixer;
     public AudioMixerGroup NoiseMixerGroup;
     public AudioMixerGroup VoiceMixerGroup;
@@ -33,9 +34,11 @@ public class CAudioManager : MonoBehaviour
     public List<AudioSource> VoiceComponents;
     public List<CAudio> NoiseResources;
     public List<CAudio> VoiceResources;
+    public List<CAudioStatistics> VoiceStatistics;
 
     public float mAudioPreviousPercentage = 0;
-
+    
+    
     void Awake()
     {
         if (_inst != null && _inst != this)
@@ -118,8 +121,18 @@ public class CAudioManager : MonoBehaviour
             source.loop = true;
             source.Play();
         }
+        ResetStatistics();
     }
-
+    private void ResetStatistics()
+    {
+        VoiceStatistics = new List<CAudioStatistics>();
+        foreach (var voice in VoiceResources)
+        {
+            VoiceStatistics.Add(new CAudioStatistics { mAudio = voice });
+        }
+    }
+    
+    // Noice
     public void UpdateNoiseVolume(int noise, float volume)
     {
         Debug.Assert(0 <= noise && noise < NoiseComponents.Count);
@@ -127,21 +140,67 @@ public class CAudioManager : MonoBehaviour
         NoiseComponents[noise].volume = volume;
     }
 
-    private int currentVoice = -1;
+    // Voices
     public void SetVoice(int voice)
     {
-        Debug.Assert(-1 <= voice && voice < VoiceResources.Count);
-        Debug.Log(string.Format("Play clip {0}", voice == -1 ? "silence" : VoiceResources[voice % VoiceResources.Count].mId));
-        currentVoice = voice;
-        VoiceComponents.ForEach(c => c.volume = 0);
+        Debug.Assert(voice == -1 || 0 <= voice && voice < VoiceResources.Count);
+        if (currentVoice == voice)
+            return;
+
+        if (voice != -1)
+        {
+            PlayVoice(voice);
+        }
+        else
+        {
+            StopVoice();
+        }
     }
+    private int currentVoice = -1;
+    private float currentVoiceTraceholdInPoint = -1; // In seconds
+    private void PlayVoice(int voice)
+    {
+        currentVoice = voice;
+    }
+
+    private void StopVoice()
+    {
+        VoiceComponents[currentVoice].volume = 0;
+    }
+
     public void UpdateVoiceVolume(float volume)
     {
         mAudioPreviousPercentage = volume;
-        Debug.Log(string.Format("Update voice volume: {0}", volume));
         if (currentVoice != -1)
         {
-            VoiceComponents[currentVoice % VoiceResources.Count].volume = volume;
+            var audioSource = VoiceComponents[currentVoice % VoiceResources.Count];
+            if (currentVoiceTraceholdInPoint != -1)
+            {
+                // In signal
+                if (audioSource.time < currentVoiceTraceholdInPoint)
+                {
+                    // Looped
+                    VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, audioSource.clip.length);
+                    currentVoiceTraceholdInPoint = 0;
+                    Debug.Log("Loop signal");
+                }
+            }
+            if (audioSource.volume < SignalTracehold &&
+                volume > SignalTracehold)
+            {
+                // Signal on
+                currentVoiceTraceholdInPoint = audioSource.time;
+                Debug.Log("Signaled");
+            }
+            if (audioSource.volume > SignalTracehold &&
+                volume < SignalTracehold)
+            {
+                // Signal off
+                VoiceStatistics[currentVoice].AddSegment(currentVoiceTraceholdInPoint, audioSource.clip.length);
+                currentVoiceTraceholdInPoint = -1;
+                Debug.Log("Lost signal");
+            }
+            audioSource.volume = volume;
         }
         SetMainNoiseVolume(1 - volume);
     }
