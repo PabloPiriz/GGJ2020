@@ -27,7 +27,6 @@
     <audio id="audio22" path="Audio/Voices/audio22" text="choqué un auto y había cámaras" isNoise="False" puntaje="5" isGranny = "False"/>
     <audio id="audio23" path="Audio/Voices/audio23" text="gladys se sigue chupando el dedo" isNoise="False" puntaje="5" isGranny = "False"/>
     <audio id="audio24" path="Audio/Voices/audio24" text="decile donde estamos" isNoise="False" puntaje="3" isGranny = "False"/>
-    <audio id="audio25" path="Audio/Voices/audio25" text="mujeres como estacionamientos" isNoise="False" puntaje="2" isGranny = "False"/>
     <audio id="audio26" path="Audio/Voices/audio26" text="mi auto hace ruido" isNoise="False" puntaje="2" isGranny = "False"/>
     <audio id="audio27" path="Audio/Voices/audio27" text="peñarol inteligencia" isNoise="False" puntaje="4" isGranny = "False"/>
     <audio id="audio28" path="Audio/Voices/audio28" text="chorizos pensaste" isNoise="False" puntaje="2" isGranny = "False"/>
