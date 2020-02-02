@@ -1,8 +1,8 @@
 <audioText>
-    <audio id="interferencia1" path="Audio/Noises/Interferencia1" text="aText" isNoise="True" puntaje="0"/>
-    <audio id="interferencia2" path="Audio/Noises/Interferencia2" text="aText" isNoise="True" puntaje="0"/>
-    <audio id="interferencia3" path="Audio/Noises/Interferencia3" text="aText" isNoise="True" puntaje="0"/>
-    <audio id="interferencia4" path="Audio/Noises/Interferencia4" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="interferencia1" path="Audio/Noises/Interferencia1" text="aText" isNoise="True" puntaje=""/>
+    <audio id="interferencia2" path="Audio/Noises/Interferencia2" text="aText" isNoise="True" puntaje=""/>
+    <audio id="interferencia3" path="Audio/Noises/Interferencia3" text="aText" isNoise="True" puntaje=""/>
+    <audio id="interferencia4" path="Audio/Noises/Interferencia4" text="aText" isNoise="True" puntaje=""/>
     <audio id="audio1" path="Audio/Voices/audio1" text="sincronización de números" isNoise="False" puntaje="1"/>
     <audio id="audio2" path="Audio/Voices/audio2" text="los 4 elementos de la tierra" isNoise="False" puntaje="4"/>
     <audio id="audio3" path="Audio/Voices/audio3" text="pitágoras seguía mamado como siempre" isNoise="False" puntaje="3"/>
@@ -21,4 +21,16 @@
 	<audio id="audio16" path="Audio/Voices/audio16" text="me hicieron pedazos el auto" isNoise="False" puntaje="5"/>
 	<audio id="audio17" path="Audio/Voices/audio17" text="necesito power maria, vendeme" isNoise="False" puntaje="5"/>
 	<audio id="audio18" path="Audio/Voices/audio18" text="pidiendo empanadas" isNoise="False" puntaje="2"/>
+	<audio id="audio19" path="Audio/Voices/audio19" text="iphone caido en agua de water" isNoise="False" puntaje="5"/>
+	<audio id="audio20" path="Audio/Voices/audio20" text="buscando trabajo choca el auto" isNoise="False" puntaje="4"/>
+	<audio id="audio21" path="Audio/Voices/audio21" text="mano de caca en el baño" isNoise="False" puntaje="5"/>
+	<audio id="audio22" path="Audio/Voices/audio22" text="choqué un auto y había cámaras" isNoise="False" puntaje="5"/>
+	<audio id="audio23" path="Audio/Voices/audio23" text="gladys se sigue chupando el dedo" isNoise="False" puntaje="5"/>
+	<audio id="audio24" path="Audio/Voices/audio24" text="decile donde estamos" isNoise="False" puntaje="3"/>
+	<audio id="audio25" path="Audio/Voices/audio25" text="mujeres como estacionamientos" isNoise="False" puntaje="2"/>
+	<audio id="audio26" path="Audio/Voices/audio26" text="mi auto hace ruido" isNoise="False" puntaje="2"/>
+	<audio id="audio27" path="Audio/Voices/audio27" text="peñarol inteligencia" isNoise="False" puntaje="4"/>
+	<audio id="audio28" path="Audio/Voices/audio28" text="chorizos pensaste" isNoise="False" puntaje="2"/>
+	<audio id="audio29" path="Audio/Voices/audio29" text="su su subir" isNoise="False" puntaje="2"/>
+	<audio id="audio30" path="Audio/Voices/audio30" text="street of separation" isNoise="False" puntaje="2"/>
 </audioText>
