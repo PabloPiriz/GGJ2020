@@ -19,6 +19,7 @@ public class CMainMenu : MonoBehaviour
 
         if (CSceneManager.Inst.haveILooped())
         {
+            _animator.Play("Main Menu", 0, 0);
             CAudioManager.Inst.playMusic();
             setState(STATE_MAIN_MENU);
         }

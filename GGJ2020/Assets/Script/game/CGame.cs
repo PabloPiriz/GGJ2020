@@ -24,7 +24,7 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 60;
+    private const float MAX_TIME = 5;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
