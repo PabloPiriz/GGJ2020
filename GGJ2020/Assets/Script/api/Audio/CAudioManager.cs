@@ -355,8 +355,7 @@ public class CAudioManager : MonoBehaviour
         float aPercent = aCurrent / aTotal;
 
         Debug.Log("aCurrent/aTotal: " + (aPercent));
-
-        return aPercent;
+        return aCurrent;
     }
 
     public void playGranny()

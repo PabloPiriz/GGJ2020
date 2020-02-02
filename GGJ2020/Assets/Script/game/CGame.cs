@@ -25,7 +25,7 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 45;
+    private const float MAX_TIME = 5;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
@@ -99,12 +99,10 @@ public class CGame : MonoBehaviour
         {
             _background.SetBool("isActive", false);
             _background.SetBool("isBroken", true);
-
-            //_background.transform.rotation = Quaternion.EulerRotation(_background.transform.x, _background.transform.y, 0); // .z = 0;
-            //_background.SetBool("isBroken", true);
+            _background.SetBool("goToWpp", true);
+            
             CAudioManager.Inst.UpdateVoiceVolume(0);
             CAudioManager.Inst.SetVoice(-1);
-            CAudioManager.Inst.stopAllFrequencies();
 
             List<CAudioStatistics> clipStatistics = CAudioManager.Inst.getAudiosListened();
             foreach (var sts in clipStatistics)
@@ -113,13 +111,17 @@ public class CGame : MonoBehaviour
                 Debug.Log(string.Format("audioClip {0} percentage {1}", sts.mAudio.mId, percentage));
             }
 
+            CAudioManager.Inst.stopAllFrequencies();
+            
             if (CAudioManager.Inst.getTotalPoints() > MIN_WIN_POINTS)
             {
-                Debug.Log("you win!");
-
+                _background.SetBool("hasWon", true);
+                CAudioManager.Inst.startWinMusic();
             }
-
-            CAudioManager.Inst.stopAllFrequencies();
+            else
+            {
+                _background.SetBool("hasWon", false);
+            }
 
             //CAudioManager.Inst.turnOff();
         }
@@ -181,12 +183,10 @@ public class CGame : MonoBehaviour
                 }
             }
 
-            if (_background.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && _background.GetCurrentAnimatorStateInfo(0).IsName("Wpp"))
+            if (_background.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && 
+                (_background.GetCurrentAnimatorStateInfo(0).IsName("Win") || _background.GetCurrentAnimatorStateInfo(0).IsName("Lose")))
             {
-                if (!CAudioManager.Inst.Music.isPlaying)
-                {
-                    setState(STATE_ENDING);
-                }
+                setState(STATE_ENDING);
             }
         }
         else if (mState == STATE_ENDING)
