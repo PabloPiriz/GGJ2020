@@ -9,8 +9,8 @@ public class CGyroscopeTesting : MonoBehaviour
 
     public Camera _camera;
 
-    public float _speedX;
-    public float _speedY;
+    public float _speedX = 4;
+    public float _speedY = 4;
     private float yaw = 0;
     private float pitch = 0;
     private Vector3 mCurrentFacing = new Vector3();

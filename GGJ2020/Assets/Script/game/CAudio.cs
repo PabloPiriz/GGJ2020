@@ -8,14 +8,14 @@ public class CAudio
     public AudioClip mClip;
     public string mText;
     public bool mNoise;
-    public bool mMain;
+    public int mPuntaje;
 
-    public CAudio(string aID, AudioClip aClip, string aText, bool isNoise, bool isMain)
+    public CAudio(string aID, AudioClip aClip, string aText, bool isNoise, int aPuntaje)
     {
         mId = aID;
         mClip = aClip;
         mText = aText;
         mNoise = isNoise;
-        mMain = isMain;
+        mPuntaje = aPuntaje;
     }
 }

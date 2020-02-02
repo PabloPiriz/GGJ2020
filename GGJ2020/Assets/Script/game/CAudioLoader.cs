@@ -70,10 +70,10 @@ public class CAudioLoader : MonoBehaviour
             AudioClip aClip = Resources.Load<AudioClip>(aPath);
             Debug.Assert(aClip != null);
             bool aNoise = bool.Parse(item.Attributes["isNoise"].Value);
-            bool aMain = bool.Parse(item.Attributes["isMain"].Value);
+            int aPoints = int.Parse(item.Attributes["puntaje"].Value);
 
 
-            CAudio aAudio = new CAudio(aID, aClip, aText, aNoise, aMain);
+            CAudio aAudio = new CAudio(aID, aClip, aText, aNoise, aPoints);
             Debug.Log("adding audio with id: " + aID + " to audios");
             mAudios.Add(aAudio);
         }
