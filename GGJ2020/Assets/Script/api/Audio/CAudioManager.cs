@@ -28,17 +28,23 @@ public class CAudioManager : MonoBehaviour
     public AudioMixer Mixer;
     public AudioMixerGroup NoiseMixerGroup;
     public AudioMixerGroup VoiceMixerGroup;
-
     public AudioMixerGroup MachineOverall;
+    public AudioMixerGroup GrannyGroup;
+    public AudioMixerGroup TurnOnGroup;
+    public AudioSource TurnOn;
+    public AudioSource TurnOff;
     public List<AudioSource> NoiseComponents;
     public List<AudioSource> VoiceComponents;
+    public AudioSource grannySource;
+    public List<CAudio> GrannyResources = new List<CAudio>();
+    public int grannyIndex = 0;
     public List<CAudio> NoiseResources;
     public List<CAudio> VoiceResources;
     public List<CAudioStatistics> VoiceStatistics;
 
     public float mAudioPreviousPercentage = 0;
-    
-    
+
+
     void Awake()
     {
         if (_inst != null && _inst != this)
@@ -48,12 +54,29 @@ public class CAudioManager : MonoBehaviour
         }
         _inst = this;
         DontDestroyOnLoad(this.gameObject);
+
+    }
+
+    public void LoadGranny()
+    {
+        GrannyResources = CAudioLoader.Inst.getGrannyAudios();
+        GrannyResources.Shuffle();
+
+        // for (int i = 0; i < GrannyResources.Count; i++)
+        // {
+        //     AudioSource source = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        //     NoiseComponents.Add(source);
+        //     source.outputAudioMixerGroup = NoiseMixerGroup;
+        //     source.clip = NoiseResources[i].mClip;
+        //     source.volume = 0;
+        //     source.loop = true;
+        // }
     }
 
     public void LoadNoises(int count)
     {
         var noises = CAudioLoader.Inst.getNoises();
-        Debug.Assert(noises.TrueForAll(n => n.mClip != null && n.mNoise));
+        Debug.Assert(noises.TrueForAll(n => n.mClip != null && n.mNoise && !n.isGranny));
         noises.Shuffle();
         NoiseResources = noises.GetRange(0, count);
 
@@ -95,7 +118,7 @@ public class CAudioManager : MonoBehaviour
         }
 
         VoiceResources = new List<CAudio>(count);
-        var mainAudios = CAudioLoader.Inst.getMainAudios();
+        var mainAudios = CAudioLoader.Inst.getBaseAudios();
         Debug.Assert(0 < mainAudios.Count);
         Debug.Assert(mainAudios.TrueForAll(n => n.mClip != null && !n.mNoise));// && n.mMain));
         mainAudios.Shuffle();
@@ -131,7 +154,7 @@ public class CAudioManager : MonoBehaviour
             VoiceStatistics.Add(new CAudioStatistics { mAudio = voice });
         }
     }
-    
+
     // Noice
     public void UpdateNoiseVolume(int noise, float volume)
     {
@@ -201,6 +224,14 @@ public class CAudioManager : MonoBehaviour
                 Debug.Log("Lost signal");
             }
             audioSource.volume = volume;
+
+            Debug.Log("*** current voice percentage: " + VoiceStatistics[currentVoice].GetPercentage());
+
+            if (VoiceStatistics[currentVoice].GetPercentage() >= 0.5f && !VoiceStatistics[currentVoice].mAudio.hasGrannyPlayed)
+            {
+                VoiceStatistics[currentVoice].mAudio.hasGrannyPlayed = true;
+                CAudioManager.Inst.playGranny();
+            }
         }
         SetMainNoiseVolume(1 - volume);
     }
@@ -227,4 +258,110 @@ public class CAudioManager : MonoBehaviour
 
         Mixer.SetFloat("MachineVol", 0);
     }
+
+    public List<CAudioStatistics> getAudiosListened()
+    {
+        List<CAudioStatistics> aList = new List<CAudioStatistics>();
+
+        for (int i = 0; i < VoiceStatistics.Count; i++)
+        {
+            if (VoiceStatistics[i].GetPercentage() > 0.5f)
+            {
+                aList.Add(VoiceStatistics[i]);
+            }
+        }
+
+        return aList;
+    }
+
+    public float getTotalPoints()
+    {
+        float aTotal = 0;
+
+        float aCurrent = 0;
+
+        List<CAudioStatistics> aList = getAudiosListened();
+
+        for (int i = 0; i < VoiceStatistics.Count; i++)
+        {
+            if (aList.Contains(VoiceStatistics[i]))
+            {
+                Debug.Log("add to current!");
+                aCurrent += VoiceStatistics[i].mAudio.mPuntaje;
+            }
+
+            aTotal += VoiceStatistics[i].mAudio.mPuntaje;
+        }
+        Debug.Log("current: " + aCurrent + " total: " + aTotal);
+
+        float aPercent = aCurrent / aTotal;
+
+        Debug.Log("aCurrent/aTotal: " + (aPercent));
+
+        return aPercent;
+    }
+
+    public void playGranny()
+    {
+        Debug.Log("*** play GRANNY!");
+
+        grannyIndex += 1;
+
+        if (grannyIndex < 0 || grannyIndex >= GrannyResources.Count)
+        {
+            grannyIndex = 0;
+        }
+
+        grannySource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        grannySource.outputAudioMixerGroup = GrannyGroup;
+        grannySource.clip = GrannyResources[grannyIndex].mClip;
+        grannySource.loop = false;
+        grannySource.Play();
+    }
+
+    public void playCachivache()
+    {
+        CAudio cachivache = CAudioLoader.Inst.mCachivache;
+
+        grannySource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        grannySource.outputAudioMixerGroup = GrannyGroup;
+        grannySource.clip = cachivache.mClip;
+        grannySource.loop = false;
+        grannySource.Play();
+    }
+
+    public void loadTurnOnGroup()
+    {
+        AudioClip aTurnOn = Resources.Load<AudioClip>("Audio/InicioMaquina");
+        AudioClip aTurnOff = Resources.Load<AudioClip>("Audio/StopMaquina");
+
+        TurnOn = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        TurnOn.clip = aTurnOn;
+        TurnOn.outputAudioMixerGroup = TurnOnGroup;
+        TurnOn.loop = false;
+
+        TurnOff = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        TurnOff.clip = aTurnOff;
+        TurnOff.outputAudioMixerGroup = TurnOnGroup;
+        TurnOff.loop = false;
+
+    }
+
+    public void turnOn()
+    {
+        if (TurnOn != null)
+        {
+            TurnOn.Play();
+        }
+    }
+
+    public void turnOff()
+    {
+        if (TurnOff != null)
+        {
+            TurnOff.Play();
+        }
+    }
+
+
 }

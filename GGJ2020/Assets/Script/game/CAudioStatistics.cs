@@ -12,7 +12,7 @@ public class CAudioStatistics
     {
         mPlayedSegments = new List<CAudioRange>();
     }
-    
+
     public void AddSegment(float secondStart, float secondStop)
     {
         Debug.Assert(secondStart <= secondStop);

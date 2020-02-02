@@ -22,6 +22,7 @@ public class CAudioLoader : MonoBehaviour
         }
     }
     private List<CAudio> mAudios;
+    public CAudio mCachivache;
 
     private static CAudioLoader _inst;
 
@@ -72,10 +73,18 @@ public class CAudioLoader : MonoBehaviour
             bool aNoise = bool.Parse(item.Attributes["isNoise"].Value);
             int aPoints = int.Parse(item.Attributes["puntaje"].Value);
 
+            bool aIsGranny = bool.Parse(item.Attributes["isGranny"].Value);
 
-            CAudio aAudio = new CAudio(aID, aClip, aText, aNoise, aPoints);
+
+            CAudio aAudio = new CAudio(aID, aClip, aText, aNoise, aPoints, aIsGranny);
             Debug.Log("adding audio with id: " + aID + " to audios");
+
             mAudios.Add(aAudio);
+
+            if (aNoise && aIsGranny)
+            {
+                mCachivache = aAudio;
+            }
         }
 
         // for (int i = 0; i < aAudios.Count; i++)
@@ -119,7 +128,7 @@ public class CAudioLoader : MonoBehaviour
 
         for (int i = 0; i < mAudios.Count; i++)
         {
-            if (mAudios[i].mNoise)
+            if (mAudios[i].mNoise && !mAudios[i].isGranny)
             {
                 aAudios.Add(mAudios[i]);
             }
@@ -142,14 +151,13 @@ public class CAudioLoader : MonoBehaviour
         return aAudios;
     }
 
-    //no longer required !! only use getBaseAudios
-    public List<CAudio> getMainAudios()
+    public List<CAudio> getGrannyAudios()
     {
         List<CAudio> aAudios = new List<CAudio>();
 
         for (int i = 0; i < mAudios.Count; i++)
         {
-            if (!mAudios[i].mNoise)
+            if (!mAudios[i].mNoise && mAudios[i].isGranny)
             {
                 aAudios.Add(mAudios[i]);
             }

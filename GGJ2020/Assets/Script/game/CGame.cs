@@ -11,6 +11,8 @@ public class CGame : MonoBehaviour
     private float mNoiseRadius = 45;
     private int mCurrentAudio;
 
+    private bool mPlayedCachivache = false;
+
     public CGyroscopeTesting _gyroscope;
     public Animator _background;
 
@@ -22,11 +24,12 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 20;
+    private const float MAX_TIME = 5;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
     private const float MAX_TIME_TAP = 2;
+    private const int MIN_WIN_POINTS = 15;
 
     private const int STATE_WAITING = 0;
     private const int STATE_PLAYING = 1;
@@ -43,6 +46,10 @@ public class CGame : MonoBehaviour
 
         generateAudioSources();
         generateNoiseSources();
+
+        CAudioManager.Inst.LoadGranny();
+
+        CAudioManager.Inst.loadTurnOnGroup();
 
         CTransitionManager.Inst.SetFadeOutFlag();
 
@@ -69,6 +76,10 @@ public class CGame : MonoBehaviour
             {
                 CAudioManager.Inst.restartAllFrequencies();
             }
+
+            CAudioManager.Inst.turnOn();
+
+
         }
         else if (mState == STATE_BROKEN)
         {
@@ -82,13 +93,20 @@ public class CGame : MonoBehaviour
         else if (mState == STATE_EVALUATION)
         {
             _background.SetBool("isActive", false);
-            _background.SetBool("isBroken", true);
+            _background.SetBool("goToWpp", true);
+            //_background.SetBool("isBroken", true);
 
-            List<CAudioStatistics> clipStatistics = CAudioManager.Inst.VoiceStatistics;
+            List<CAudioStatistics> clipStatistics = CAudioManager.Inst.getAudiosListened();
             foreach (var sts in clipStatistics)
             {
                 var percentage = sts.GetPercentage();
                 Debug.Log(string.Format("audioClip {0} percentage {1}", sts.mAudio.mId, percentage));
+            }
+
+            if (CAudioManager.Inst.getTotalPoints() > MIN_WIN_POINTS)
+            {
+                Debug.Log("you win!");
+
             }
 
             CAudioManager.Inst.stopAllFrequencies();
@@ -115,19 +133,34 @@ public class CGame : MonoBehaviour
             updateAudioFading();
 
             discountTimer();
+
+#if UNITY_EDITOR
+            _gyroscope.mouseRotateCamera();
+#elif UNITY_IOS
+            _gyroscope.gyroModifyCamera();
+#endif
         }
         else if (mState == STATE_BROKEN)
         {
-            checkIfDoubleTapped();
+            if (!CAudioManager.Inst.TurnOff.isPlaying)
+            {
+                if (!mPlayedCachivache)
+                {
+                    CAudioManager.Inst.playCachivache();
+                    mPlayedCachivache = true;
+                }
+                checkIfDoubleTapped();
+            }
 
         }
         else if (mState == STATE_EVALUATION)
         {
-            CSceneManager.Inst.LoadScene("Main Menu");
+
         }
         else if (mState == STATE_ENDING)
         {
-
+            CAudioManager.Inst.stopAllFrequencies();
+            CSceneManager.Inst.LoadScene("Main Menu");
         }
     }
 
@@ -383,7 +416,7 @@ public class CGame : MonoBehaviour
             mTapTimeRemaining = MAX_TIME_TAP;
         }
 #elif UNITY_IOS
-        if (Input.touchCount > 1)
+        if (Input.touchCount > 0)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {

@@ -50,6 +50,12 @@ MonoBehaviour:
     type: 2}
   MachineOverall: {fileID: -8814518632551637428, guid: cae8cb136e8ad034fbde12c869de0b03,
     type: 2}
+  GrannyGroup: {fileID: -4054366908401220146, guid: cae8cb136e8ad034fbde12c869de0b03,
+    type: 2}
+  TurnOnGroup: {fileID: 7130240281632260047, guid: cae8cb136e8ad034fbde12c869de0b03,
+    type: 2}
   NoiseComponents: []
   VoiceComponents: []
+  grannySource: {fileID: 0}
+  grannyIndex: 0
   mAudioPreviousPercentage: 0

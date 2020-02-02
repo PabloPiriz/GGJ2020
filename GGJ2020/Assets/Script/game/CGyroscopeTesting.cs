@@ -66,7 +66,7 @@ public class CGyroscopeTesting : MonoBehaviour
     protected void FixedUpdate()
     {
 #if UNITY_EDITOR
-        mouseRotateCamera();
+
 #elif UNITY_IOS
         gyroModifyCamera();
 #endif
@@ -75,23 +75,23 @@ public class CGyroscopeTesting : MonoBehaviour
 
     protected void OnGUI()
     {
-        GUI.skin.label.fontSize = Screen.width / 15;
-        if (!CTransitionManager.Inst.IsScreenCovered())
-        {
-#if UNITY_IOS
-            GUILayout.Label("Orientation: " + Screen.orientation);
-            GUILayout.Label("input.gyro.attitude: " + Input.gyro.attitude);
-            GUILayout.Label("iphone width/font: " + Screen.width + " : " + GUI.skin.label.fontSize);
-#endif
-            GUILayout.Label("CameraQuaternion: " + _camera.transform.rotation);
-        }
+        //         GUI.skin.label.fontSize = Screen.width / 15;
+        //         if (!CTransitionManager.Inst.IsScreenCovered())
+        //         {
+        // #if UNITY_IOS
+        //             GUILayout.Label("Orientation: " + Screen.orientation);
+        //             GUILayout.Label("input.gyro.attitude: " + Input.gyro.attitude);
+        //             GUILayout.Label("iphone width/font: " + Screen.width + " : " + GUI.skin.label.fontSize);
+        // #endif
+        //             GUILayout.Label("CameraQuaternion: " + _camera.transform.rotation);
+        //         }
     }
 
     /********************************************/
 
     // The Gyroscope is right-handed.  Unity is left handed.
     // Make the necessary change to the camera.
-    private void gyroModifyCamera()
+    public void gyroModifyCamera()
     {
         transform.rotation = gyroToUnity(Input.gyro.attitude);
 
@@ -103,7 +103,7 @@ public class CGyroscopeTesting : MonoBehaviour
         return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
 
-    private void mouseRotateCamera()
+    public void mouseRotateCamera()
     {
         if (Input.GetMouseButton(0))
         {

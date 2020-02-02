@@ -10,12 +10,18 @@ public class CAudio
     public bool mNoise;
     public int mPuntaje;
 
-    public CAudio(string aID, AudioClip aClip, string aText, bool isNoise, int aPuntaje)
+    public bool isGranny;
+    public bool hasGrannyPlayed = false;
+
+    public CAudio(string aID, AudioClip aClip, string aText, bool isNoise, int aPuntaje, bool aIsGranny)
     {
         mId = aID;
         mClip = aClip;
         mText = aText;
         mNoise = isNoise;
         mPuntaje = aPuntaje;
+        isGranny = aIsGranny;
     }
+
+
 }
