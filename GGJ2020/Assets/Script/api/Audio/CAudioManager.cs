@@ -301,7 +301,7 @@ public class CAudioManager : MonoBehaviour
     {
         Debug.Log("restart them!!");
 
-        Mixer.SetFloat("MachineVol", 0);
+        Mixer.SetFloat("OtherVol", 0);
     }
 
     public List<CAudioStatistics> getAudiosListened()
