@@ -82,6 +82,7 @@ public class CAudioManager : MonoBehaviour
         Music = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
         Music.clip = aMusic;
         Music.outputAudioMixerGroup = MusicGroup;
+        Mixer.SetFloat("musicVol", -5);
         Music.loop = true;
     }
 
@@ -372,9 +373,23 @@ public class CAudioManager : MonoBehaviour
 
     public void turnOn()
     {
+        Mixer.SetFloat("turnOnVol", -10);
         if (TurnOn != null)
         {
             TurnOn.Play();
+        }
+
+    }
+
+    public void checkIfFinishedTurnOn()
+    {
+        float aFloat = 0;
+        if (Mixer.GetFloat("turnVol", out aFloat))
+        {
+            if (aFloat == -10)
+            {
+                Mixer.SetFloat("turnOnVol", 0);
+            }
         }
     }
 
@@ -385,6 +400,4 @@ public class CAudioManager : MonoBehaviour
             TurnOff.Play();
         }
     }
-
-
 }

@@ -143,7 +143,7 @@ public class CAudioLoader : MonoBehaviour
 
         for (int i = 0; i < mAudios.Count; i++)
         {
-            if (!mAudios[i].mNoise)
+            if (!mAudios[i].mNoise && !mAudios[i].isGranny)
             {
                 aAudios.Add(mAudios[i]);
             }

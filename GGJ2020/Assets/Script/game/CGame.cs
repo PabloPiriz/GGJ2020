@@ -139,6 +139,8 @@ public class CGame : MonoBehaviour
 
             discountTimer();
 
+            CAudioManager.Inst.checkIfFinishedTurnOn();
+
 #if UNITY_EDITOR
             _gyroscope.mouseRotateCamera();
 #elif UNITY_IOS
