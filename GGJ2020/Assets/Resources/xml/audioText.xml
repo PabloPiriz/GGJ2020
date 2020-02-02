@@ -7,30 +7,35 @@
     <audio id="audio2" path="Audio/Voices/audio2" text="los 4 elementos de la tierra" isNoise="False" puntaje="4"/>
     <audio id="audio3" path="Audio/Voices/audio3" text="pitágoras seguía mamado como siempre" isNoise="False" puntaje="3"/>
     <audio id="audio4" path="Audio/Voices/audio4" text="los 7 enanitos" isNoise="False" puntaje="4"/>
-	<audio id="audio5" path="Audio/Voices/audio5" text="number in the best" isNoise="False" puntaje="3"/>
-	<audio id="audio6" path="Audio/Voices/audio6" text="ya que estamos, ya que estamos" isNoise="False" puntaje="2"/>
-	<audio id="audio7" path="Audio/Voices/audio7" text="accidente de auto" isNoise="False" puntaje="5"/>
-	<audio id="audio8" path="Audio/Voices/audio8" text="accidente2" isNoise="False" puntaje="4"/>
-	<audio id="audio9" path="Audio/Voices/audio9" text="un duende que parecía loco" isNoise="False" puntaje="2"/>
-	<audio id="audio10" path="Audio/Voices/audio10" text="encontré 13mil dólares y los devolví" isNoise="False" puntaje="4"/>
-	<audio id="audio11" path="Audio/Voices/audio11" text="matris es muy inteligente" isNoise="False" puntaje="4"/>
-	<audio id="audio12" path="Audio/Voices/audio12" text="saco un libro de tupaca maru" isNoise="False" puntaje="2"/>
-	<audio id="audio13" path="Audio/Voices/audio13" text="tarareo vamos a la playa" isNoise="False" puntaje="1"/>
-	<audio id="audio14" path="Audio/Voices/audio14" text="terminamos curtiendo en piriápolis" isNoise="False" puntaje="5"/>
-	<audio id="audio15" path="Audio/Voices/audio15" text="julio estaba saliendo con la valentina" isNoise="False" puntaje="5"/>
-	<audio id="audio16" path="Audio/Voices/audio16" text="me hicieron pedazos el auto" isNoise="False" puntaje="5"/>
-	<audio id="audio17" path="Audio/Voices/audio17" text="necesito power maria, vendeme" isNoise="False" puntaje="5"/>
-	<audio id="audio18" path="Audio/Voices/audio18" text="pidiendo empanadas" isNoise="False" puntaje="2"/>
-	<audio id="audio19" path="Audio/Voices/audio19" text="iphone caido en agua de water" isNoise="False" puntaje="5"/>
-	<audio id="audio20" path="Audio/Voices/audio20" text="buscando trabajo choca el auto" isNoise="False" puntaje="4"/>
-	<audio id="audio21" path="Audio/Voices/audio21" text="mano de caca en el baño" isNoise="False" puntaje="5"/>
-	<audio id="audio22" path="Audio/Voices/audio22" text="choqué un auto y había cámaras" isNoise="False" puntaje="5"/>
-	<audio id="audio23" path="Audio/Voices/audio23" text="gladys se sigue chupando el dedo" isNoise="False" puntaje="5"/>
-	<audio id="audio24" path="Audio/Voices/audio24" text="decile donde estamos" isNoise="False" puntaje="3"/>
-	<audio id="audio25" path="Audio/Voices/audio25" text="mujeres como estacionamientos" isNoise="False" puntaje="2"/>
-	<audio id="audio26" path="Audio/Voices/audio26" text="mi auto hace ruido" isNoise="False" puntaje="2"/>
-	<audio id="audio27" path="Audio/Voices/audio27" text="peñarol inteligencia" isNoise="False" puntaje="4"/>
-	<audio id="audio28" path="Audio/Voices/audio28" text="chorizos pensaste" isNoise="False" puntaje="2"/>
-	<audio id="audio29" path="Audio/Voices/audio29" text="su su subir" isNoise="False" puntaje="2"/>
-	<audio id="audio30" path="Audio/Voices/audio30" text="street of separation" isNoise="False" puntaje="2"/>
+    <audio id="audio5" path="Audio/Voices/audio5" text="number in the best" isNoise="False" puntaje="3"/>
+    <audio id="audio6" path="Audio/Voices/audio6" text="ya que estamos, ya que estamos" isNoise="False" puntaje="2"/>
+    <audio id="audio7" path="Audio/Voices/audio7" text="accidente de auto" isNoise="False" puntaje="5"/>
+    <audio id="audio8" path="Audio/Voices/audio8" text="accidente2" isNoise="False" puntaje="4"/>
+    <audio id="audio9" path="Audio/Voices/audio9" text="un duende que parecía loco" isNoise="False" puntaje="2"/>
+    <audio id="audio10" path="Audio/Voices/audio10" text="encontré 13mil dólares y los devolví" isNoise="False" puntaje="4"/>
+    <audio id="audio11" path="Audio/Voices/audio11" text="matris es muy inteligente" isNoise="False" puntaje="4"/>
+    <audio id="audio12" path="Audio/Voices/audio12" text="saco un libro de tupaca maru" isNoise="False" puntaje="2"/>
+    <audio id="audio13" path="Audio/Voices/audio13" text="tarareo vamos a la playa" isNoise="False" puntaje="1"/>
+    <audio id="audio14" path="Audio/Voices/audio14" text="terminamos curtiendo en piriápolis" isNoise="False" puntaje="5"/>
+    <audio id="audio15" path="Audio/Voices/audio15" text="julio estaba saliendo con la valentina" isNoise="False" puntaje="5"/>
+    <audio id="audio16" path="Audio/Voices/audio16" text="me hicieron pedazos el auto" isNoise="False" puntaje="5"/>
+    <audio id="audio17" path="Audio/Voices/audio17" text="necesito power maria, vendeme" isNoise="False" puntaje="5"/>
+    <audio id="audio18" path="Audio/Voices/audio18" text="pidiendo empanadas" isNoise="False" puntaje="2"/>
+    <audio id="audio19" path="Audio/Voices/audio19" text="iphone caido en agua de water" isNoise="False" puntaje="5"/>
+    <audio id="audio20" path="Audio/Voices/audio20" text="buscando trabajo choca el auto" isNoise="False" puntaje="4"/>
+    <audio id="audio21" path="Audio/Voices/audio21" text="mano de caca en el baño" isNoise="False" puntaje="5"/>
+    <audio id="audio22" path="Audio/Voices/audio22" text="choqué un auto y había cámaras" isNoise="False" puntaje="5"/>
+    <audio id="audio23" path="Audio/Voices/audio23" text="gladys se sigue chupando el dedo" isNoise="False" puntaje="5"/>
+    <audio id="audio24" path="Audio/Voices/audio24" text="decile donde estamos" isNoise="False" puntaje="3"/>
+    <audio id="audio25" path="Audio/Voices/audio25" text="mujeres como estacionamientos" isNoise="False" puntaje="2"/>
+    <audio id="audio26" path="Audio/Voices/audio26" text="mi auto hace ruido" isNoise="False" puntaje="2"/>
+    <audio id="audio27" path="Audio/Voices/audio27" text="peñarol inteligencia" isNoise="False" puntaje="4"/>
+    <audio id="audio28" path="Audio/Voices/audio28" text="chorizos pensaste" isNoise="False" puntaje="2"/>
+    <audio id="audio29" path="Audio/Voices/audio29" text="su su subir" isNoise="False" puntaje="2"/>
+    <audio id="audio30" path="Audio/Voices/audio30" text="street of separation" isNoise="False" puntaje="2"/>
+    <audio id="audio31" path="Audio/Voices/audio31" text="otorrino laringitis" isNoise="False" puntaje="3"/>
+    <audio id="audio32" path="Audio/Voices/audio32" text="lu, soy tu padre" isNoise="False" puntaje="5"/>
+    <audio id="audio33" path="Audio/Voices/audio33" text="ayuda desesperada" isNoise="False" puntaje="5"/>
+    <audio id="audio34" path="Audio/Voices/audio34" text="coordenadas" isNoise="False" puntaje="4"/>
+    <audio id="audio35" path="Audio/Voices/audio35" text="wilsooon" isNoise="False" puntaje="4"/>
 </audioText>
