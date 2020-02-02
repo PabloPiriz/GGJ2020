@@ -32,13 +32,24 @@ public class CSceneManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    private bool haveLooped = false;
+
     public void LoadScene(string name)
     {
+        if (name == "Main Menu")
+        {
+            haveLooped = true;
+        }
         SceneManager.LoadSceneAsync(name);
     }
 
     public void LoadSceneAdditive(string name)
     {
         SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
+    }
+
+    public bool haveILooped()
+    {
+        return haveLooped;
     }
 }

@@ -17,7 +17,16 @@ public class CMainMenu : MonoBehaviour
 
         CAudioManager.Inst.LoadMusic();
 
-        setState(STATE_INTRO);
+        if (CSceneManager.Inst.haveILooped())
+        {
+            CAudioManager.Inst.playMusic();
+            setState(STATE_MAIN_MENU);
+        }
+        else
+        {
+            setState(STATE_INTRO);
+        }
+
     }
 
     public void setState(int aState)
