@@ -90,7 +90,7 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 4dc8dba95e14bbe459549a2eac688a78
-    name: NoiceVol
+    name: NoiseVol
   m_AudioMixerGroupViews:
   - guids:
     - 9b6e81e497c3f9f4394f7b2e7240d0f2
