@@ -103,16 +103,24 @@ public class CAudioManager : MonoBehaviour
         Music.loop = false;
         Music.clip = aMusic;
         Music.Play();
+
+        Debug.Log("play win!!");
     }
 
     public void playMusic()
     {
-        Music.Play();
+        if (Music != null)
+        {
+            Music.Play();
+        }
     }
 
     public void stopMusic()
     {
-        Music.Stop();
+        if (Music != null)
+        {
+            Music.Stop();
+        }
     }
 
     public void LoadNoises(int count)

@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1536055777}
+  _tap: {fileID: 0}
   mState: 0
 --- !u!4 &311278993
 Transform:

@@ -15,6 +15,7 @@ public class CGame : MonoBehaviour
 
     public CGyroscopeTesting _gyroscope;
     public Animator _background;
+    public Animator _doubleTap;
 
     private int mAmountOfAudios = 12;
     private int mAmountOfNoises = 4;
@@ -37,6 +38,7 @@ public class CGame : MonoBehaviour
     private const int STATE_EVALUATION = 3;
     private const int STATE_ENDING = 4;
     // Start is called before the first frame update
+    private float aTimeToWpp = 3;
     void Start()
     {
         mAudioSources = new List<Vector3>();
@@ -96,7 +98,8 @@ public class CGame : MonoBehaviour
         else if (mState == STATE_EVALUATION)
         {
             _background.SetBool("isActive", false);
-            _background.SetBool("goToWpp", true);
+            _background.SetBool("isBroken", true);
+
             //_background.transform.rotation = Quaternion.EulerRotation(_background.transform.x, _background.transform.y, 0); // .z = 0;
             //_background.SetBool("isBroken", true);
             CAudioManager.Inst.UpdateVoiceVolume(0);
@@ -116,8 +119,6 @@ public class CGame : MonoBehaviour
             }
 
             CAudioManager.Inst.stopAllFrequencies();
-
-            CAudioManager.Inst.startWinMusic();
 
             //CAudioManager.Inst.turnOff();
         }
@@ -161,12 +162,24 @@ public class CGame : MonoBehaviour
                 {
                     CAudioManager.Inst.playCachivache();
                     mPlayedCachivache = true;
+                    _doubleTap.SetBool("showTap", true);
                 }
             }
             checkIfDoubleTapped();
         }
         else if (mState == STATE_EVALUATION)
         {
+            if (mRepeated)
+            {
+                aTimeToWpp -= Time.deltaTime;
+                if (aTimeToWpp <= 0)
+                {
+                    _background.SetBool("goToWpp", true);
+                    CAudioManager.Inst.startWinMusic();
+                    mRepeated = false;
+                }
+            }
+
             if (_background.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && _background.GetCurrentAnimatorStateInfo(0).IsName("Wpp"))
             {
                 if (!CAudioManager.Inst.Music.isPlaying)
@@ -442,6 +455,7 @@ public class CGame : MonoBehaviour
 #endif
         if (mTimesTapped >= 2)
         {
+            _doubleTap.SetBool("showTap", false);
             setState(STATE_PLAYING);
         }
     }

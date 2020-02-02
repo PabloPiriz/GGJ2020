@@ -7,6 +7,8 @@ public class CMainMenu : MonoBehaviour
 
     public Animator _animator;
 
+    public Animator _tap;
+
     public int mState;
 
     public const int STATE_INTRO = 0;
