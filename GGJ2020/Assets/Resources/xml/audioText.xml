@@ -30,4 +30,7 @@
 	<audio id="audio25" path="Audio/Voices/audio25" text="mujeres como estacionamientos" isNoise="False" puntaje="2"/>
 	<audio id="audio26" path="Audio/Voices/audio26" text="mi auto hace ruido" isNoise="False" puntaje="2"/>
 	<audio id="audio27" path="Audio/Voices/audio27" text="peñarol inteligencia" isNoise="False" puntaje="4"/>
+	<audio id="audio28" path="Audio/Voices/audio28" text="chorizos pensaste" isNoise="False" puntaje="2"/>
+	<audio id="audio29" path="Audio/Voices/audio29" text="su su subir" isNoise="False" puntaje="2"/>
+	<audio id="audio30" path="Audio/Voices/audio30" text="street of separation" isNoise="False" puntaje="2"/>
 </audioText>
