@@ -78,7 +78,10 @@ public class CGame : MonoBehaviour
         }
         else if (mState == STATE_EVALUATION)
         {
+            _background.SetBool("isActive", false);
+            _background.SetBool("isBroken", true);
 
+            CAudioManager.Inst.stopAllFrequencies();
         }
         else if (mState == STATE_ENDING)
         {

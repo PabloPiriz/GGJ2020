@@ -5,10 +5,32 @@ using UnityEngine;
 public class CMainMenu : MonoBehaviour
 {
 
+    public Animator _animator;
 
+    public int mState;
+
+    public const int STATE_INTRO = 0;
+    public const int STATE_MAIN_MENU = 1;
     void Awake()
     {
         CAudioLoader.Inst.hello();
+
+        setState(mState);
+    }
+
+    public void setState(int aState)
+    {
+        mState = aState;
+
+        Debug.Log("mState: " + mState);
+        if (mState == STATE_INTRO)
+        {
+
+        }
+        else if (mState == STATE_MAIN_MENU)
+        {
+            _animator.SetBool("introEnded", true);
+        }
     }
 
     private void startMatch()
@@ -36,11 +58,21 @@ public class CMainMenu : MonoBehaviour
 
     void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
+        if (mState == STATE_INTRO)
         {
-            startMatch();
+            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                _animator.SetBool("introEnded", true);
+                setState(STATE_MAIN_MENU);
+            }
         }
+        else if (mState == STATE_MAIN_MENU)
+        {
+#if UNITY_EDITOR
+            if (Input.GetMouseButtonDown(0))
+            {
+                startMatch();
+            }
 #elif UNITY_IOS
         if (Input.touchCount > 0)
         {
@@ -50,6 +82,7 @@ public class CMainMenu : MonoBehaviour
             }
         }
 #endif
+        }
     }
 
 }
