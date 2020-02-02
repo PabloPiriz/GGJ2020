@@ -11,7 +11,6 @@ public class CAudio
     public int mPuntaje;
 
     public bool isGranny;
-    public bool hasGrannyPlayed = false;
 
     public CAudio(string aID, AudioClip aClip, string aText, bool isNoise, int aPuntaje, bool aIsGranny)
     {

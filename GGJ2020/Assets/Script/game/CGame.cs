@@ -98,7 +98,9 @@ public class CGame : MonoBehaviour
             _background.SetBool("isActive", false);
             _background.SetBool("goToWpp", true);
             //_background.SetBool("isBroken", true);
-
+            CAudioManager.Inst.UpdateVoiceVolume(0);
+            CAudioManager.Inst.SetVoice(-1);
+            
             List<CAudioStatistics> clipStatistics = CAudioManager.Inst.getAudiosListened();
             foreach (var sts in clipStatistics)
             {
@@ -154,9 +156,8 @@ public class CGame : MonoBehaviour
                     CAudioManager.Inst.playCachivache();
                     mPlayedCachivache = true;
                 }
-                checkIfDoubleTapped();
             }
-
+            checkIfDoubleTapped();
         }
         else if (mState == STATE_EVALUATION)
         {

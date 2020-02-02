@@ -6,11 +6,14 @@ using UnityEngine;
 public class CAudioStatistics
 {
     public CAudio mAudio { get; set; }
+    public bool hasGrannyPlayed { get; set; }
     private List<CAudioRange> mPlayedSegments;
+    
 
     public CAudioStatistics()
     {
         mPlayedSegments = new List<CAudioRange>();
+        hasGrannyPlayed = false;
     }
 
     public void AddSegment(float secondStart, float secondStop)
@@ -21,24 +24,30 @@ public class CAudioStatistics
         mPlayedSegments.Add(new CAudioRange { min = secondStart, max = secondStop });
     }
 
+    public float GetPlayedTime()
+    {
+        if (mPlayedSegments.Count == 0)
+            return 0;
+        mPlayedSegments.OrderByDescending(n => n.min);
+        float aCurrentMax = mPlayedSegments[0].min;
+        float aTime = 0;
+        foreach (var range in mPlayedSegments)
+        {
+            if (aCurrentMax < range.max)
+            {
+                aTime += (range.max - aCurrentMax);
+                aCurrentMax = range.max;
+            }
+        }
+        return aTime;
+    }
+
     public float GetPercentage()
     {
         if (mPlayedSegments.Count == 0)
             return 0;
 
-        mPlayedSegments.OrderByDescending(n => n.min);
-        float aClipDuration = mAudio.mClip.length;
-        float aCurrentMax = mPlayedSegments[0].min;
-        float aPercentage = 0;
-        foreach (var range in mPlayedSegments)
-        {
-            if (aCurrentMax < range.max)
-            {
-                aPercentage += (range.max - aCurrentMax) / aClipDuration;
-                aCurrentMax = range.max;
-            }
-        }
-        return aPercentage;
+        return GetPlayedTime() / mAudio.mClip.length;
     }
 
     public class CAudioRange
