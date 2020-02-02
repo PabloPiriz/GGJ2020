@@ -272,7 +272,7 @@ public class CGame : MonoBehaviour
                     }
                 }
 
-                Debug.Log("aMinDistance for noise: " + aMinDistance);
+                Debug.Log("aMinDistance for sound: " + aMinDistance);
             }
 
 
