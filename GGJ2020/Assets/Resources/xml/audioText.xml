@@ -1,9 +1,9 @@
 <audioText>
-    <audio id="interferencia1" path="Audio/Noises/Interferencia1" text="aText" isNoise="True" puntaje=""/>
-    <audio id="interferencia2" path="Audio/Noises/Interferencia2" text="aText" isNoise="True" puntaje=""/>
-    <audio id="interferencia3" path="Audio/Noises/Interferencia3" text="aText" isNoise="True" puntaje=""/>
-    <audio id="interferencia4" path="Audio/Noises/Interferencia4" text="aText" isNoise="True" puntaje=""/>
-    <audio id="audio1" path="Audio/Voices/audio1" text="sincronización de números" isNoise="False" puntaje="1"/>
+    <audio id="interferencia1" path="Audio/Noises/Interferencia1" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="interferencia2" path="Audio/Noises/Interferencia2" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="interferencia3" path="Audio/Noises/Interferencia3" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="interferencia4" path="Audio/Noises/Interferencia4" text="aText" isNoise="True" puntaje="0"/>
+    <audio id="audio1" path="Audio/Voices/audio1" text="sincronización de números" isNoise="False" puntaje="2"/>
     <audio id="audio2" path="Audio/Voices/audio2" text="los 4 elementos de la tierra" isNoise="False" puntaje="4"/>
     <audio id="audio3" path="Audio/Voices/audio3" text="pitágoras seguía mamado como siempre" isNoise="False" puntaje="3"/>
     <audio id="audio4" path="Audio/Voices/audio4" text="los 7 enanitos" isNoise="False" puntaje="4"/>
