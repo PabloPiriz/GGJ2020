@@ -14,7 +14,7 @@ public class CGame : MonoBehaviour
     public CGyroscopeTesting _gyroscope;
     public Animator _background;
 
-    private int mAmountOfAudios = 8;
+    private int mAmountOfAudios = 12;
     private int mAmountOfNoises = 4;
 
     private int mState;
@@ -22,16 +22,17 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 15;
+    private const float MAX_TIME = 60;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
-    private const float MAX_TIME_TAP = 1;
+    private const float MAX_TIME_TAP = 2;
 
-    private const int STATE_PLAYING = 0;
-    private const int STATE_BROKEN = 1;
-    private const int STATE_EVALUATION = 2;
-    private const int STATE_ENDING = 3;
+    private const int STATE_WAITING = 0;
+    private const int STATE_PLAYING = 1;
+    private const int STATE_BROKEN = 2;
+    private const int STATE_EVALUATION = 3;
+    private const int STATE_ENDING = 4;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +48,9 @@ public class CGame : MonoBehaviour
 
         _background.SetBool("isActive", false);
 
-        setState(STATE_PLAYING);
+        CAudioManager.Inst.restartAllFrequencies();
+
+        setState(STATE_WAITING);
     }
 
     public void setState(int aState)
@@ -92,6 +95,13 @@ public class CGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (mState == STATE_WAITING)
+        {
+            if (!CTransitionManager.Inst.IsScreenCovered())
+            {
+                setState(STATE_PLAYING);
+            }
+        }
         if (mState == STATE_PLAYING)
         {
             updateNoiseFading();
@@ -367,8 +377,8 @@ public class CGame : MonoBehaviour
             mTimesTapped += 1;
             mTapTimeRemaining = MAX_TIME_TAP;
         }
-        //#elif UNITY_IOS
-        if (Input.touchCount == 1)
+#elif UNITY_IOS
+        if (Input.touchCount > 1)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
