@@ -7,7 +7,7 @@ public class CGame : MonoBehaviour
     private List<Vector3> mAudioSources;
     private List<Vector3> mNoiseSources;
     private Dictionary<Vector3, float> mNoiseVolume;
-    private float mAudioRadius = 15;
+    private float mAudioRadius = 30;
     private float mNoiseRadius = 45;
     private int mCurrentAudio;
 
@@ -15,13 +15,23 @@ public class CGame : MonoBehaviour
     public Animator _background;
 
     private int mAmountOfAudios = 3;
-    private int mAmountOfNoises = 2;
+    private int mAmountOfNoises = 4;
 
     private int mState;
 
+    private float mTimeRemaining;
+    private bool mRepeated = false;
+
+    private const float MAX_TIME = 15;
+
+    private int mTimesTapped = 0;
+    private float mTapTimeRemaining;
+    private const float MAX_TIME_TAP = 1;
+
     private const int STATE_PLAYING = 0;
-    private const int STATE_SELECTING = 1;
-    private const int STATE_ENDING = 2;
+    private const int STATE_BROKEN = 1;
+    private const int STATE_EVALUATION = 2;
+    private const int STATE_ENDING = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +54,29 @@ public class CGame : MonoBehaviour
     {
         mState = aState;
 
+        Debug.Log("mState: " + aState);
+
         if (mState == STATE_PLAYING)
         {
+            mTimeRemaining = MAX_TIME;
 
+            _background.SetBool("isBroken", false);
+
+            if (mRepeated)
+            {
+                CAudioManager.Inst.restartAllFrequencies();
+            }
         }
-        else if (mState == STATE_SELECTING)
+        else if (mState == STATE_BROKEN)
+        {
+            mRepeated = true;
+
+            _background.SetBool("isActive", false);
+            _background.SetBool("isBroken", true);
+
+            CAudioManager.Inst.stopAllFrequencies();
+        }
+        else if (mState == STATE_EVALUATION)
         {
 
         }
@@ -66,9 +94,14 @@ public class CGame : MonoBehaviour
             updateNoiseFading();
             updateAudioFading();
 
+            discountTimer();
+        }
+        else if (mState == STATE_BROKEN)
+        {
+            checkIfDoubleTapped();
 
         }
-        else if (mState == STATE_SELECTING)
+        else if (mState == STATE_EVALUATION)
         {
 
         }
@@ -202,7 +235,7 @@ public class CGame : MonoBehaviour
                 }
             }
 
-            Debug.Log("aMinDistance for noise: " + aMinDistance);
+            //Debug.Log("aMinDistance for noise: " + aMinDistance);
 
             float aTotal = 0;
 
@@ -276,7 +309,7 @@ public class CGame : MonoBehaviour
                     }
                 }
 
-                Debug.Log("aMinDistance for sound: " + aMinDistance);
+                //Debug.Log("aMinDistance for sound: " + aMinDistance);
             }
 
 
@@ -297,5 +330,53 @@ public class CGame : MonoBehaviour
 
         //set audio volume to aVolume at AudioManage
         CAudioManager.Inst.UpdateVoiceVolume(aVolume);
+    }
+
+    public void discountTimer()
+    {
+        mTimeRemaining -= Time.deltaTime;
+
+        Debug.Log("mTimeRemaining: " + mTimeRemaining);
+
+        if (mTimeRemaining <= 0)
+        {
+            if (mRepeated)
+            {
+                setState(STATE_EVALUATION);
+            }
+            else
+            {
+                setState(STATE_BROKEN);
+            }
+        }
+    }
+
+    public void checkIfDoubleTapped()
+    {
+        mTapTimeRemaining -= Time.deltaTime;
+        if (mTapTimeRemaining <= 0)
+        {
+            mTimesTapped = 0;
+        }
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            mTimesTapped += 1;
+            mTapTimeRemaining = MAX_TIME_TAP;
+        }
+        //#elif UNITY_IOS
+        if (Input.touchCount == 1)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                mTimesTapped += 1;
+                mTapTimeRemaining = MAX_TIME_TAP;
+            }
+        }
+#endif
+        if (mTimesTapped >= 2)
+        {
+            setState(STATE_PLAYING);
+        }
     }
 }

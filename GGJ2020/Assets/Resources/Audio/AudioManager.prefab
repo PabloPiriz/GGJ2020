@@ -48,5 +48,8 @@ MonoBehaviour:
     type: 2}
   VoiceMixerGroup: {fileID: -508365553797710614, guid: cae8cb136e8ad034fbde12c869de0b03,
     type: 2}
+  MachineOverall: {fileID: -8814518632551637428, guid: cae8cb136e8ad034fbde12c869de0b03,
+    type: 2}
   NoiseComponents: []
   VoiceComponents: []
+  mAudioPreviousPercentage: 0

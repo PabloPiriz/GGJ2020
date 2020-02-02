@@ -27,10 +27,14 @@ public class CAudioManager : MonoBehaviour
     public AudioMixer Mixer;
     public AudioMixerGroup NoiseMixerGroup;
     public AudioMixerGroup VoiceMixerGroup;
+
+    public AudioMixerGroup MachineOverall;
     public List<AudioSource> NoiseComponents;
     public List<AudioSource> VoiceComponents;
     public List<CAudio> NoiseResources;
     public List<CAudio> VoiceResources;
+
+    public float mAudioPreviousPercentage = 0;
 
     void Awake()
     {
@@ -133,6 +137,7 @@ public class CAudioManager : MonoBehaviour
     }
     public void UpdateVoiceVolume(float volume)
     {
+        mAudioPreviousPercentage = volume;
         Debug.Log(string.Format("Update voice volume: {0}", volume));
         if (currentVoice != -1)
         {
@@ -145,5 +150,22 @@ public class CAudioManager : MonoBehaviour
     {
         Debug.Assert(0 <= volume && volume <= 1);
         Mixer.SetFloat(string.Format("NoiseVol", NoiseMixerGroup), Mathf.Log(volume) * 20);
+    }
+
+    public void stopAllFrequencies()
+    {
+        Debug.Log("stopAllFrequencies");
+        //UpdateVoiceVolume(0);
+        //SetMainNoiseVolume(0);
+
+        Mixer.SetFloat("MachineVol", float.MinValue);
+    }
+
+    public void restartAllFrequencies()
+    {
+        Debug.Log("restart them!!");
+        //UpdateVoiceVolume(mAudioPreviousPercentage);
+
+        Mixer.SetFloat("MachineVol", 0);
     }
 }
