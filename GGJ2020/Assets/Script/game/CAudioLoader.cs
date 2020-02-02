@@ -60,12 +60,13 @@ public class CAudioLoader : MonoBehaviour
         foreach (XmlNode item in aAudios)
         {
             string aID = item.Attributes["id"].Value;
-            Debug.Log("id: " + aID);
             string aPath = item.Attributes["path"].Value;
+            Debug.Log("id: " + aID + " path: " + aPath);
 
             string aText = item.Attributes["text"].Value;
 
             AudioClip aClip = Resources.Load<AudioClip>(aPath);
+            Debug.Assert(aClip != null);
             bool aNoise = bool.Parse(item.Attributes["isNoise"].Value);
             bool aMain = bool.Parse(item.Attributes["isMain"].Value);
 
