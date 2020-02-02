@@ -106,7 +106,7 @@ public class CGame : MonoBehaviour
         }
         else if (mState == STATE_EVALUATION)
         {
-
+            CSceneManager.Inst.LoadScene("Main Menu");
         }
         else if (mState == STATE_ENDING)
         {
