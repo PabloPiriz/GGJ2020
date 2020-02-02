@@ -7,7 +7,7 @@ public class CGame : MonoBehaviour
     private List<Vector3> mAudioSources;
     private List<Vector3> mNoiseSources;
     private Dictionary<Vector3, float> mNoiseVolume;
-    private float mAudioRadius = 30;
+    private float mAudioRadius = 50;
     private float mNoiseRadius = 45;
     private int mCurrentAudio;
 
@@ -24,7 +24,7 @@ public class CGame : MonoBehaviour
     private float mTimeRemaining;
     private bool mRepeated = false;
 
-    private const float MAX_TIME = 5;
+    private const float MAX_TIME = 60;
 
     private int mTimesTapped = 0;
     private float mTapTimeRemaining;
@@ -336,7 +336,6 @@ public class CGame : MonoBehaviour
                         setCurrentAudio(-1);
 
                         _background.SetBool("isActive", false);
-                        Debug.Log("+++ NOT ACTIVE!!");
                     }
                     else
                     {
@@ -363,8 +362,6 @@ public class CGame : MonoBehaviour
                     {
                         setCurrentAudio(i);
                         setAudioVolume(aDistance);
-
-                        Debug.Log("+++ ACTIVE!!");
 
                         _background.SetBool("isActive", true);
                     }

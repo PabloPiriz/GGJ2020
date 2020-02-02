@@ -7,7 +7,7 @@ public class CAudioStatistics
 {
     public CAudio mAudio { get; set; }
     public bool hasGrannyPlayed { get; set; }
-    private List<CAudioRange> mPlayedSegments;
+    public List<CAudioRange> mPlayedSegments;
     
 
     public CAudioStatistics()
@@ -28,7 +28,7 @@ public class CAudioStatistics
     {
         if (mPlayedSegments.Count == 0)
             return 0;
-        mPlayedSegments.OrderByDescending(n => n.min);
+        mPlayedSegments.Sort((n1, n2) => n1.min.CompareTo(n2.min));
         float aCurrentMax = mPlayedSegments[0].min;
         float aTime = 0;
         foreach (var range in mPlayedSegments)
