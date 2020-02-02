@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8060449752005260948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16130453, y: 0.053174086, z: -0.51501346}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,5 +49,4 @@ MonoBehaviour:
   VoiceMixerGroup: {fileID: -508365553797710614, guid: cae8cb136e8ad034fbde12c869de0b03,
     type: 2}
   NoiseComponents: []
-  VoiceComponent: {fileID: 0}
-  VoiceResources: []
+  VoiceComponents: []

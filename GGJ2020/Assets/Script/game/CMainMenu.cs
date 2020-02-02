@@ -8,7 +8,7 @@ public class CMainMenu : MonoBehaviour
 
     void Awake()
     {
-        CAudioLoader.Inst.loadAllTexts();
+        CAudioLoader.Inst.hello();
     }
 
     private void startMatch()
