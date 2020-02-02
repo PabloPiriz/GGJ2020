@@ -44,6 +44,7 @@ public class CMainMenu : MonoBehaviour
         else if (mState == STATE_MAIN_MENU)
         {
             _animator.SetBool("introEnded", true);
+            _tap.SetBool("showTap", true);
         }
     }
 
