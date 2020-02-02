@@ -37,6 +37,8 @@ public class CAudioLoader : MonoBehaviour
 
         mAudios = new List<CAudio>();
 
+        loadAllTexts();
+
         //loadAllTexts();
     }
 
@@ -152,5 +154,10 @@ public class CAudioLoader : MonoBehaviour
             }
         }
         return aAudios;
+    }
+
+    public void hello()
+    {
+
     }
 }
